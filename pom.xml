@@ -1127,6 +1127,9 @@
                         <phase>verify</phase>
                         <configuration>
                             <failOnWarning>true</failOnWarning>
+                            <ignoredDependencies>
+                                <ignoredDependency>ch.qos.logback:logback-classic</ignoredDependency>
+                            </ignoredDependencies>
                         </configuration>
                     </execution>
                 </executions>
