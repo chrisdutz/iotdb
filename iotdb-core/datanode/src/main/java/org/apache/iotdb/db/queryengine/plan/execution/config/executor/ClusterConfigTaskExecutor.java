@@ -31,6 +31,7 @@ import org.apache.iotdb.commons.client.exception.ClientManagerException;
 import org.apache.iotdb.commons.cluster.NodeStatus;
 import org.apache.iotdb.commons.conf.CommonDescriptor;
 import org.apache.iotdb.commons.consensus.ConfigRegionId;
+import org.apache.iotdb.commons.exception.IllegalPathException;
 import org.apache.iotdb.commons.exception.IoTDBException;
 import org.apache.iotdb.commons.exception.MetadataException;
 import org.apache.iotdb.commons.executable.ExecutableManager;
@@ -48,6 +49,7 @@ import org.apache.iotdb.commons.subscription.meta.topic.TopicMeta;
 import org.apache.iotdb.commons.trigger.service.TriggerExecutableManager;
 import org.apache.iotdb.commons.udf.service.UDFClassLoader;
 import org.apache.iotdb.commons.udf.service.UDFExecutableManager;
+import org.apache.iotdb.commons.utils.CommonDateTimeUtils;
 import org.apache.iotdb.commons.utils.TimePartitionUtils;
 import org.apache.iotdb.confignode.rpc.thrift.TAlterLogicalViewReq;
 import org.apache.iotdb.confignode.rpc.thrift.TAlterPipeReq;
@@ -62,7 +64,6 @@ import org.apache.iotdb.confignode.rpc.thrift.TCreatePipeReq;
 import org.apache.iotdb.confignode.rpc.thrift.TCreateTopicReq;
 import org.apache.iotdb.confignode.rpc.thrift.TCreateTriggerReq;
 import org.apache.iotdb.confignode.rpc.thrift.TDatabaseSchema;
-import org.apache.iotdb.confignode.rpc.thrift.TDatabaseSchemaResp;
 import org.apache.iotdb.confignode.rpc.thrift.TDeactivateSchemaTemplateReq;
 import org.apache.iotdb.confignode.rpc.thrift.TDeleteDatabasesReq;
 import org.apache.iotdb.confignode.rpc.thrift.TDeleteLogicalViewReq;
@@ -96,6 +97,7 @@ import org.apache.iotdb.confignode.rpc.thrift.TShowRegionReq;
 import org.apache.iotdb.confignode.rpc.thrift.TShowRegionResp;
 import org.apache.iotdb.confignode.rpc.thrift.TShowSubscriptionReq;
 import org.apache.iotdb.confignode.rpc.thrift.TShowSubscriptionResp;
+import org.apache.iotdb.confignode.rpc.thrift.TShowTTLResp;
 import org.apache.iotdb.confignode.rpc.thrift.TShowThrottleReq;
 import org.apache.iotdb.confignode.rpc.thrift.TShowTopicReq;
 import org.apache.iotdb.confignode.rpc.thrift.TShowTopicResp;
@@ -243,9 +245,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static org.apache.iotdb.db.protocol.client.ConfigNodeClient.MSG_RECONNECTION_FAIL;
@@ -355,7 +357,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
       TShowDatabaseResp resp = client.showDatabase(req);
       // build TSBlock
       showDatabaseStatement.buildTSBlock(resp.getDatabaseInfoMap(), future);
-    } catch (IOException | ClientManagerException | TException e) {
+    } catch (IOException | ClientManagerException | TException | IllegalPathException e) {
       future.setException(e);
     }
     return future;
@@ -467,7 +469,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
           }
         } catch (IOException | URISyntaxException e) {
           LOGGER.warn(
-              "Failed to get executable for UDF({}) using URI: {}, the cause is: {}",
+              "Failed to get executable for UDF({}) using URI: {}.",
               createFunctionStatement.getUdfName(),
               createFunctionStatement.getUriString(),
               e);
@@ -503,14 +505,14 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
           | InvocationTargetException
           | ClassCastException e) {
         LOGGER.warn(
-            "Failed to create function when try to create UDF({}) instance first, the cause is: {}",
+            "Failed to create function when try to create UDF({}) instance first.",
             createFunctionStatement.getUdfName(),
             e);
         future.setException(
             new IoTDBException(
                 "Failed to load class '"
                     + createFunctionStatement.getClassName()
-                    + "', because it's not found in jar file: "
+                    + "', because it's not found in jar file or is invalid: "
                     + createFunctionStatement.getUriString(),
                 TSStatusCode.UDF_LOAD_CLASS_ERROR.getStatusCode()));
         return future;
@@ -640,7 +642,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
           }
         } catch (IOException | URISyntaxException e) {
           LOGGER.warn(
-              "Failed to get executable for Trigger({}) using URI: {}, the cause is: {}",
+              "Failed to get executable for Trigger({}) using URI: {}.",
               createTriggerStatement.getTriggerName(),
               createTriggerStatement.getUriString(),
               e);
@@ -677,14 +679,14 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
           | InvocationTargetException
           | ClassCastException e) {
         LOGGER.warn(
-            "Failed to create trigger when try to create trigger({}) instance first, the cause is: {}",
+            "Failed to create trigger when try to create trigger({}) instance first.",
             createTriggerStatement.getTriggerName(),
             e);
         future.setException(
             new IoTDBException(
                 "Failed to load class '"
                     + createTriggerStatement.getClassName()
-                    + "', because it's not found in jar file: "
+                    + "', because it's not found in jar file or is invalid: "
                     + createTriggerStatement.getUriString(),
                 TSStatusCode.TRIGGER_LOAD_CLASS_ERROR.getStatusCode()));
         return future;
@@ -750,7 +752,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
 
   @Override
   public SettableFuture<ConfigTaskResult> createPipePlugin(
-      CreatePipePluginStatement createPipePluginStatement) {
+      final CreatePipePluginStatement createPipePluginStatement) {
     final SettableFuture<ConfigTaskResult> future = SettableFuture.create();
     final String pluginName = createPipePluginStatement.getPluginName();
     final String className = createPipePluginStatement.getClassName();
@@ -766,13 +768,13 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
 
     try (final ConfigNodeClient client =
         CONFIG_NODE_CLIENT_MANAGER.borrowClient(ConfigNodeInfo.CONFIG_REGION_ID)) {
-      String libRoot;
-      ByteBuffer jarFile;
-      String jarMd5;
+      final String libRoot;
+      final ByteBuffer jarFile;
+      final String jarMd5;
 
       final String jarFileName = new File(uriString).getName();
       try {
-        URI uri = new URI(uriString);
+        final URI uri = new URI(uriString);
         if (uri.getScheme() == null) {
           future.setException(
               new IoTDBException(
@@ -782,10 +784,10 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
         }
         if (!uri.getScheme().equals("file")) {
           // Download executable
-          ExecutableResource resource =
+          final ExecutableResource resource =
               PipePluginExecutableManager.getInstance()
                   .request(Collections.singletonList(uriString));
-          String jarFilePathUnderTempDir =
+          final String jarFilePathUnderTempDir =
               PipePluginExecutableManager.getInstance()
                       .getDirStringUnderTempRootByRequestId(resource.getRequestId())
                   + File.separator
@@ -803,9 +805,9 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
           // Set md5 of the jar file
           jarMd5 = DigestUtils.md5Hex(Files.newInputStream(Paths.get(libRoot)));
         }
-      } catch (IOException | URISyntaxException e) {
+      } catch (final IOException | URISyntaxException e) {
         LOGGER.warn(
-            "Failed to get executable for PipePlugin({}) using URI: {}, the cause is: {}",
+            "Failed to get executable for PipePlugin({}) using URI: {}.",
             createPipePluginStatement.getPluginName(),
             createPipePluginStatement.getUriString(),
             e);
@@ -819,25 +821,26 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
       }
 
       // try to create instance, this request will fail if creation is not successful
-      try (PipePluginClassLoader classLoader = new PipePluginClassLoader(libRoot)) {
+      try (final PipePluginClassLoader classLoader = new PipePluginClassLoader(libRoot)) {
         // ensure that jar file contains the class and the class is a pipe plugin
-        Class<?> clazz = Class.forName(createPipePluginStatement.getClassName(), true, classLoader);
-        PipePlugin ignored = (PipePlugin) clazz.getDeclaredConstructor().newInstance();
-      } catch (ClassNotFoundException
+        final Class<?> clazz =
+            Class.forName(createPipePluginStatement.getClassName(), true, classLoader);
+        final PipePlugin ignored = (PipePlugin) clazz.getDeclaredConstructor().newInstance();
+      } catch (final ClassNotFoundException
           | NoSuchMethodException
           | InstantiationException
           | IllegalAccessException
           | InvocationTargetException
           | ClassCastException e) {
         LOGGER.warn(
-            "Failed to create function when try to create PipePlugin({}) instance first, the cause is: {}",
+            "Failed to create function when try to create PipePlugin({}) instance first.",
             createPipePluginStatement.getPluginName(),
             e);
         future.setException(
             new IoTDBException(
                 "Failed to load class '"
                     + createPipePluginStatement.getClassName()
-                    + "', because it's not found in jar file: "
+                    + "', because it's not found in jar file or is invalid: "
                     + createPipePluginStatement.getUriString(),
                 TSStatusCode.PIPE_PLUGIN_LOAD_CLASS_ERROR.getStatusCode()));
         return future;
@@ -866,7 +869,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
       } else {
         future.set(new ConfigTaskResult(TSStatusCode.SUCCESS_STATUS));
       }
-    } catch (ClientManagerException | TException | IOException e) {
+    } catch (final ClientManagerException | TException | IOException e) {
       future.setException(e);
     }
     return future;
@@ -915,8 +918,8 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
   @Override
   public SettableFuture<ConfigTaskResult> setTTL(SetTTLStatement setTTLStatement, String taskName) {
     SettableFuture<ConfigTaskResult> future = SettableFuture.create();
-    List<String> databasePathPattern = Arrays.asList(setTTLStatement.getDatabasePath().getNodes());
-    TSetTTLReq setTTLReq = new TSetTTLReq(databasePathPattern, setTTLStatement.getTTL());
+    List<String> pathPattern = Arrays.asList(setTTLStatement.getPath().getNodes());
+    TSetTTLReq setTTLReq = new TSetTTLReq(pathPattern, setTTLStatement.getTTL(), false);
     try (ConfigNodeClient configNodeClient =
         CONFIG_NODE_CLIENT_MANAGER.borrowClient(ConfigNodeInfo.CONFIG_REGION_ID)) {
       // Send request to some API server
@@ -926,7 +929,7 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
         LOGGER.warn(
             "Failed to execute {} {} in config node, status is {}.",
             taskName,
-            setTTLStatement.getDatabasePath(),
+            setTTLStatement.getPath(),
             tsStatus);
         future.setException(new IoTDBException(tsStatus.getMessage(), tsStatus.getCode()));
       } else {
@@ -1246,31 +1249,12 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
   @Override
   public SettableFuture<ConfigTaskResult> showTTL(ShowTTLStatement showTTLStatement) {
     SettableFuture<ConfigTaskResult> future = SettableFuture.create();
-    List<PartialPath> databasePaths = showTTLStatement.getPaths();
-    Map<String, Long> databaseToTTL = new HashMap<>();
+    Map<String, Long> databaseToTTL = new TreeMap<>();
     try (ConfigNodeClient client =
         CONFIG_NODE_CLIENT_MANAGER.borrowClient(ConfigNodeInfo.CONFIG_REGION_ID)) {
-      ByteBuffer scope = showTTLStatement.getAuthorityScope().serialize();
-      if (showTTLStatement.isAll()) {
-        List<String> allStorageGroupPathPattern = Arrays.asList("root", "**");
-        TGetDatabaseReq req = new TGetDatabaseReq(allStorageGroupPathPattern, scope);
-        TDatabaseSchemaResp resp = client.getMatchedDatabaseSchemas(req);
-        for (Map.Entry<String, TDatabaseSchema> entry : resp.getDatabaseSchemaMap().entrySet()) {
-          databaseToTTL.put(entry.getKey(), entry.getValue().getTTL());
-        }
-      } else {
-        for (PartialPath databasePath : databasePaths) {
-          List<String> databasePathPattern = Arrays.asList(databasePath.getNodes());
-          TGetDatabaseReq req = new TGetDatabaseReq(databasePathPattern, scope);
-          TDatabaseSchemaResp resp = client.getMatchedDatabaseSchemas(req);
-          for (Map.Entry<String, TDatabaseSchema> entry : resp.getDatabaseSchemaMap().entrySet()) {
-            if (!databaseToTTL.containsKey(entry.getKey())) {
-              databaseToTTL.put(entry.getKey(), entry.getValue().getTTL());
-            }
-          }
-        }
-      }
-    } catch (IOException | ClientManagerException | TException e) {
+      TShowTTLResp resp = client.showAllTTL();
+      databaseToTTL.putAll(resp.getPathTTLMap());
+    } catch (ClientManagerException | TException e) {
       future.setException(e);
     }
     // build TSBlock
@@ -1935,7 +1919,12 @@ public class ClusterConfigTaskExecutor implements IConfigTaskExecutor {
 
     // Validate topic config
     final TopicMeta temporaryTopicMeta =
-        new TopicMeta(topicName, System.currentTimeMillis(), topicAttributes);
+        new TopicMeta(
+            topicName,
+            CommonDateTimeUtils.convertMilliTimeWithPrecision(
+                System.currentTimeMillis(),
+                CommonDescriptor.getInstance().getConfig().getTimestampPrecision()),
+            topicAttributes);
     try {
       PipeAgent.plugin().validateExtractor(temporaryTopicMeta.generateExtractorAttributes());
       PipeAgent.plugin().validateProcessor(temporaryTopicMeta.generateProcessorAttributes());

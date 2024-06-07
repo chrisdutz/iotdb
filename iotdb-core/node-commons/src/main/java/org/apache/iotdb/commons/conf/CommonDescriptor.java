@@ -103,6 +103,13 @@ public class CommonDescriptor {
     }
     config.setTierTTLInMs(tierTTL);
 
+    int ttlRuleCapacity =
+        Integer.parseInt(
+            properties.getProperty(
+                "ttl_rule_capacity", String.valueOf(config.getTTlRuleCapacity())));
+    ttlRuleCapacity = ttlRuleCapacity < 0 ? Integer.MAX_VALUE : ttlRuleCapacity;
+    config.setTTlRuleCapacity(ttlRuleCapacity);
+
     config.setSyncDir(properties.getProperty("dn_sync_dir", config.getSyncDir()).trim());
 
     config.setWalDirs(
@@ -239,6 +246,8 @@ public class CommonDescriptor {
             properties.getProperty(
                 "cluster_device_limit_threshold",
                 String.valueOf(config.getDeviceLimitThreshold()))));
+
+    loadRetryProperties(properties);
   }
 
   private void loadPipeProps(Properties properties) {
@@ -553,15 +562,14 @@ public class CommonDescriptor {
             properties.getProperty(
                 "two_stage_aggregate_sender_end_points_cache_in_ms",
                 String.valueOf(config.getTwoStageAggregateSenderEndPointsCacheInMs()))));
+  }
 
+  private void loadSubscriptionProps(Properties properties) {
     config.setSubscriptionCacheMemoryUsagePercentage(
         Float.parseFloat(
             properties.getProperty(
                 "subscription_cache_memory_usage_percentage",
                 String.valueOf(config.getSubscriptionCacheMemoryUsagePercentage()))));
-  }
-
-  private void loadSubscriptionProps(Properties properties) {
     config.setSubscriptionSubtaskExecutorMaxThreadNum(
         Integer.parseInt(
             properties.getProperty(
@@ -605,6 +613,20 @@ public class CommonDescriptor {
             properties.getProperty(
                 "subscription_read_file_buffer_size",
                 String.valueOf(config.getSubscriptionReadFileBufferSize()))));
+  }
+
+  public void loadRetryProperties(Properties properties) {
+    config.setRemoteWriteMaxRetryDurationInMs(
+        Long.parseLong(
+            properties.getProperty(
+                "write_request_remote_dispatch_max_retry_duration_in_ms",
+                String.valueOf(config.getRemoteWriteMaxRetryDurationInMs()))));
+
+    config.setRetryForUnknownErrors(
+        Boolean.parseBoolean(
+            properties.getProperty(
+                "enable_retry_for_unknown_error",
+                String.valueOf(config.isRetryForUnknownErrors()))));
   }
 
   public void loadGlobalConfig(TGlobalConfig globalConfig) {
