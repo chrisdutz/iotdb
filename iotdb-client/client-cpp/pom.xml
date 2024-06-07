@@ -45,6 +45,17 @@
             <version>1.3.3-Jakarta-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            This dependency is used by in order to start a server before
+            running the tests, so it needs to be built first.
+        -->
+        <dependency>
+            <groupId>org.apache.iotdb</groupId>
+            <artifactId>iotdb-distribution</artifactId>
+            <version>1.3.3-Jakarta-SNAPSHOT</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
