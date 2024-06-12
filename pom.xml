@@ -111,7 +111,6 @@
         <nimbus-jose-jwt.version>9.39.1</nimbus-jose-jwt.version>
         <oauth2-oidc-sdk.version>11.12</oauth2-oidc-sdk.version>
         <openapi.generator.version>7.6.0</openapi.generator.version>
-        <orc-core.version>2.0.1</orc-core.version>
         <osgi.version>7.0.0</osgi.version>
         <pax-jdbc-common.version>1.5.7</pax-jdbc-common.version>
         <ratis-thirdparty-misc.version>1.0.6</ratis-thirdparty-misc.version>
@@ -135,8 +134,6 @@
         <sonar.java.checkstyle.reportPaths>target/checkstyle-report.xml</sonar.java.checkstyle.reportPaths>
         <sonar.junit.reportPaths>target/surefire-reports,target/failsafe-reports</sonar.junit.reportPaths>
         <sonar.organization>apache</sonar.organization>
-        <spark-scala.2.11.version>2.4.8</spark-scala.2.11.version>
-        <spark-scala.2.12.version>3.5.0</spark-scala.2.12.version>
         <!-- Override this to `true`, if you want to disable spotless -->
         <spotless.skip>false</spotless.skip>
         <spotless.version>2.43.0</spotless.version>
@@ -929,21 +926,6 @@
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
                     <version>1.0.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.github.eirslett</groupId>
-                    <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.14.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>3.1.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.scala-tools</groupId>
-                    <artifactId>maven-scala-plugin</artifactId>
-                    <version>2.15.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.antlr</groupId>
