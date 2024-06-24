@@ -74,8 +74,7 @@ public class ConfigNodeStartupCheck extends StartupChecks {
     checkGlobalConfig();
     createDirsIfNecessary();
     if (SystemPropertiesUtils.isRestarted()) {
-      /* Always restore ClusterName and ConfigNodeId first */
-      CONF.setClusterName(SystemPropertiesUtils.loadClusterNameWhenRestarted());
+      /* Always restore ConfigNodeId first */
       CONF.setConfigNodeId(SystemPropertiesUtils.loadConfigNodeIdWhenRestarted());
 
       SystemPropertiesUtils.checkSystemProperties();
@@ -146,7 +145,7 @@ public class ConfigNodeStartupCheck extends StartupChecks {
     // When the schemaengine region consensus protocol is set to PipeConsensus,
     // we should report an error
     if (CONF.getSchemaRegionConsensusProtocolClass().equals(ConsensusFactory.FAST_IOT_CONSENSUS)
-        || CONF.getSchemaRegionConsensusProtocolClass().equals(ConsensusFactory.IOTV2_CONSENSUS)) {
+        || CONF.getSchemaRegionConsensusProtocolClass().equals(ConsensusFactory.IOT_CONSENSUS_V2)) {
       throw new ConfigurationException(
           "schema_region_consensus_protocol_class",
           String.valueOf(CONF.getSchemaRegionConsensusProtocolClass()),

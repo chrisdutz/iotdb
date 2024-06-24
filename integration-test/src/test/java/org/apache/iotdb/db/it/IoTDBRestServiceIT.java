@@ -54,6 +54,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.iotdb.db.queryengine.common.header.ColumnHeaderConstant.COLUMN_TTL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -1064,7 +1065,7 @@ public class IoTDBRestServiceIT {
         new ArrayList<Object>() {
           {
             add("Device");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
@@ -1094,7 +1095,6 @@ public class IoTDBRestServiceIT {
         new ArrayList<Object>() {
           {
             add("Database");
-            add("TTL");
             add("SchemaReplicationFactor");
             add("DataReplicationFactor");
             add("TimePartitionInterval");
@@ -1308,7 +1308,7 @@ public class IoTDBRestServiceIT {
             add("Device");
             add("IsAligned");
             add("Template");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
@@ -1346,7 +1346,7 @@ public class IoTDBRestServiceIT {
             add("Database");
             add("IsAligned");
             add("Template");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
@@ -1716,7 +1716,7 @@ public class IoTDBRestServiceIT {
         new ArrayList<Object>() {
           {
             add("Device");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
@@ -1746,7 +1746,6 @@ public class IoTDBRestServiceIT {
         new ArrayList<Object>() {
           {
             add("Database");
-            add("TTL");
             add("SchemaReplicationFactor");
             add("DataReplicationFactor");
             add("TimePartitionInterval");
@@ -1960,7 +1959,7 @@ public class IoTDBRestServiceIT {
             add("Device");
             add("IsAligned");
             add("Template");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
@@ -1999,7 +1998,7 @@ public class IoTDBRestServiceIT {
             add("Database");
             add("IsAligned");
             add("Template");
-            add("TTL");
+            add(COLUMN_TTL);
           }
         };
     List<Object> values1 =
