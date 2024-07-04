@@ -30,12 +30,12 @@
     <packaging>pom</packaging>
     <name>IoTDB: Core</name>
     <modules>
-        <module>antlr</module>
         <module>confignode</module>
         <module>consensus</module>
         <module>datanode</module>
+        <module>grammar-tree</module>
+        <module>grammar-table</module>
         <module>metrics</module>
         <module>node-commons</module>
-        <module>relational-grammar</module>
     </modules>
 </project>

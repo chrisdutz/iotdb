@@ -28,14 +28,14 @@ import java.util.regex.Pattern;
 
 import static com.google.common.base.Strings.nullToEmpty;
 
-public final class RelationalSqlKeywords {
+public final class TableSqlKeywords {
   private static final Pattern IDENTIFIER = Pattern.compile("'([A-Z_]+)'");
 
-  private RelationalSqlKeywords() {}
+  private TableSqlKeywords() {}
 
   public static Set<String> sqlKeywords() {
     ImmutableSet.Builder<String> names = ImmutableSet.builder();
-    Vocabulary vocabulary = RelationalSqlLexer.VOCABULARY;
+    Vocabulary vocabulary = TableSqlLexer.VOCABULARY;
     for (int i = 0; i <= vocabulary.getMaxTokenType(); i++) {
       String name = nullToEmpty(vocabulary.getLiteralName(i));
       Matcher matcher = IDENTIFIER.matcher(name);

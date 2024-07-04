@@ -19,14 +19,14 @@
 
 package org.apache.iotdb.db.queryengine.plan.table.sql.parser;
 
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlParser;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 
 public final class RefreshableSqlBaseParserInitializer
-    implements BiConsumer<RelationalSqlLexer, RelationalSqlParser> {
+    implements BiConsumer<TableSqlLexer, TableSqlParser> {
 
   private final AtomicReference<SqlBaseParserAndLexerATNCaches> caches = new AtomicReference<>();
 
@@ -39,14 +39,14 @@ public final class RefreshableSqlBaseParserInitializer
   }
 
   @Override
-  public void accept(RelationalSqlLexer lexer, RelationalSqlParser parser) {
+  public void accept(TableSqlLexer lexer, TableSqlParser parser) {
     SqlBaseParserAndLexerATNCaches atnCaches = this.caches.get();
     atnCaches.lexer.configureLexer(lexer);
     atnCaches.parser.configureParser(parser);
   }
 
   private static final class SqlBaseParserAndLexerATNCaches {
-    public final AntlrATNCacheFields lexer = new AntlrATNCacheFields(RelationalSqlLexer._ATN);
-    public final AntlrATNCacheFields parser = new AntlrATNCacheFields(RelationalSqlParser._ATN);
+    public final AntlrATNCacheFields lexer = new AntlrATNCacheFields(TableSqlLexer._ATN);
+    public final AntlrATNCacheFields parser = new AntlrATNCacheFields(TableSqlParser._ATN);
   }
 }

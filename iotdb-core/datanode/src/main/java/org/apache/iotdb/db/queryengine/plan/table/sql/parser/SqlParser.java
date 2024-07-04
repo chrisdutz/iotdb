@@ -24,9 +24,9 @@ import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Node;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.NodeLocation;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlBaseListener;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlParser;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlBaseListener;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
 
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BaseErrorListener;
@@ -67,35 +67,35 @@ public class SqlParser {
           throw new ParsingException(message, e, line, charPositionInLine + 1);
         }
       };
-  private static final BiConsumer<RelationalSqlLexer, RelationalSqlParser>
-      DEFAULT_PARSER_INITIALIZER = (RelationalSqlLexer lexer, RelationalSqlParser parser) -> {};
+  private static final BiConsumer<TableSqlLexer, TableSqlParser> DEFAULT_PARSER_INITIALIZER =
+      (TableSqlLexer lexer, TableSqlParser parser) -> {};
 
   private static final ErrorHandler PARSER_ERROR_HANDLER =
       ErrorHandler.builder()
-          .specialRule(RelationalSqlParser.RULE_expression, "<expression>")
-          .specialRule(RelationalSqlParser.RULE_booleanExpression, "<expression>")
-          .specialRule(RelationalSqlParser.RULE_valueExpression, "<expression>")
-          .specialRule(RelationalSqlParser.RULE_primaryExpression, "<expression>")
-          .specialRule(RelationalSqlParser.RULE_predicate, "<predicate>")
-          .specialRule(RelationalSqlParser.RULE_identifier, "<identifier>")
-          .specialRule(RelationalSqlParser.RULE_string, "<string>")
-          .specialRule(RelationalSqlParser.RULE_query, "<query>")
-          .specialRule(RelationalSqlParser.RULE_type, "<type>")
-          .specialToken(RelationalSqlParser.INTEGER_VALUE, "<integer>")
+          .specialRule(TableSqlParser.RULE_expression, "<expression>")
+          .specialRule(TableSqlParser.RULE_booleanExpression, "<expression>")
+          .specialRule(TableSqlParser.RULE_valueExpression, "<expression>")
+          .specialRule(TableSqlParser.RULE_primaryExpression, "<expression>")
+          .specialRule(TableSqlParser.RULE_predicate, "<predicate>")
+          .specialRule(TableSqlParser.RULE_identifier, "<identifier>")
+          .specialRule(TableSqlParser.RULE_string, "<string>")
+          .specialRule(TableSqlParser.RULE_query, "<query>")
+          .specialRule(TableSqlParser.RULE_type, "<type>")
+          .specialToken(TableSqlParser.INTEGER_VALUE, "<integer>")
           .build();
 
-  private final BiConsumer<RelationalSqlLexer, RelationalSqlParser> initializer;
+  private final BiConsumer<TableSqlLexer, TableSqlParser> initializer;
 
   public SqlParser() {
     this(DEFAULT_PARSER_INITIALIZER);
   }
 
-  public SqlParser(BiConsumer<RelationalSqlLexer, RelationalSqlParser> initializer) {
+  public SqlParser(BiConsumer<TableSqlLexer, TableSqlParser> initializer) {
     this.initializer = requireNonNull(initializer, "initializer is null");
   }
 
   public Statement createStatement(String sql, ZoneId zoneId) {
-    return (Statement) invokeParser("statement", sql, RelationalSqlParser::singleStatement, zoneId);
+    return (Statement) invokeParser("statement", sql, TableSqlParser::singleStatement, zoneId);
   }
 
   public Statement createStatement(String sql, NodeLocation location, ZoneId zoneId) {
@@ -104,23 +104,23 @@ public class SqlParser {
             "statement",
             sql,
             Optional.ofNullable(location),
-            RelationalSqlParser::singleStatement,
+            TableSqlParser::singleStatement,
             zoneId);
   }
 
   public Expression createExpression(String expression, ZoneId zoneId) {
     return (Expression)
-        invokeParser("expression", expression, RelationalSqlParser::standaloneExpression, zoneId);
+        invokeParser("expression", expression, TableSqlParser::standaloneExpression, zoneId);
   }
 
   public DataType createType(String expression, ZoneId zoneId) {
-    return (DataType) invokeParser("type", expression, RelationalSqlParser::standaloneType, zoneId);
+    return (DataType) invokeParser("type", expression, TableSqlParser::standaloneType, zoneId);
   }
 
   private Node invokeParser(
       String name,
       String sql,
-      Function<RelationalSqlParser, ParserRuleContext> parseFunction,
+      Function<TableSqlParser, ParserRuleContext> parseFunction,
       ZoneId zoneId) {
     return invokeParser(name, sql, Optional.empty(), parseFunction, zoneId);
   }
@@ -129,13 +129,13 @@ public class SqlParser {
       String name,
       String sql,
       Optional<NodeLocation> location,
-      Function<RelationalSqlParser, ParserRuleContext> parseFunction,
+      Function<TableSqlParser, ParserRuleContext> parseFunction,
       ZoneId zoneId) {
     try {
-      RelationalSqlLexer lexer =
-          new RelationalSqlLexer(new CaseInsensitiveStream(CharStreams.fromString(sql)));
+      TableSqlLexer lexer =
+          new TableSqlLexer(new CaseInsensitiveStream(CharStreams.fromString(sql)));
       CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-      RelationalSqlParser parser = new RelationalSqlParser(tokenStream);
+      TableSqlParser parser = new TableSqlParser(tokenStream);
       initializer.accept(lexer, parser);
 
       // Override the default error strategy to not attempt inserting or deleting a token.
@@ -193,17 +193,17 @@ public class SqlParser {
     }
   }
 
-  private static class PostProcessor extends RelationalSqlBaseListener {
+  private static class PostProcessor extends TableSqlBaseListener {
     private final List<String> ruleNames;
-    private final RelationalSqlParser parser;
+    private final TableSqlParser parser;
 
-    public PostProcessor(List<String> ruleNames, RelationalSqlParser parser) {
+    public PostProcessor(List<String> ruleNames, TableSqlParser parser) {
       this.ruleNames = ruleNames;
       this.parser = parser;
     }
 
     @Override
-    public void exitQuotedIdentifier(RelationalSqlParser.QuotedIdentifierContext context) {
+    public void exitQuotedIdentifier(TableSqlParser.QuotedIdentifierContext context) {
       Token token = context.QUOTED_IDENTIFIER().getSymbol();
       if (token.getText().length() == 2) { // empty identifier
         throw new ParsingException(
@@ -215,7 +215,7 @@ public class SqlParser {
     }
 
     @Override
-    public void exitBackQuotedIdentifier(RelationalSqlParser.BackQuotedIdentifierContext context) {
+    public void exitBackQuotedIdentifier(TableSqlParser.BackQuotedIdentifierContext context) {
       Token token = context.BACKQUOTED_IDENTIFIER().getSymbol();
       throw new ParsingException(
           "backquoted identifiers are not supported; use double quotes to quote identifiers",
@@ -225,7 +225,7 @@ public class SqlParser {
     }
 
     //    @Override
-    //    public void exitDigitIdentifier(RelationalSqlParser.DigitIdentifierContext context) {
+    //    public void exitDigitIdentifier(TableSqlParser.DigitIdentifierContext context) {
     //      Token token = context.DIGIT_IDENTIFIER().getSymbol();
     //      throw new ParsingException(
     //          "identifiers must not start with a digit; surround the identifier with double
@@ -236,7 +236,7 @@ public class SqlParser {
     //    }
 
     @Override
-    public void exitNonReserved(RelationalSqlParser.NonReservedContext context) {
+    public void exitNonReserved(TableSqlParser.NonReservedContext context) {
       // we can't modify the tree during rule enter/exit event handling unless we're dealing with a
       // terminal.
       // Otherwise, ANTLR gets confused and fires spurious notifications.
@@ -253,7 +253,7 @@ public class SqlParser {
       Token newToken =
           new CommonToken(
               new Pair<>(token.getTokenSource(), token.getInputStream()),
-              RelationalSqlLexer.IDENTIFIER,
+              TableSqlLexer.IDENTIFIER,
               token.getChannel(),
               token.getStartIndex(),
               token.getStopIndex());

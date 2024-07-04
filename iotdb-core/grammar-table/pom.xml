@@ -26,10 +26,14 @@
         <artifactId>iotdb-core</artifactId>
         <version>1.3.3-SNAPSHOT</version>
     </parent>
-    <artifactId>iotdb-antlr</artifactId>
-    <name>IoTDB: Core: Antlr-Parser</name>
-    <description>Antlr parser for IoTDB.</description>
+    <artifactId>iotdb-grammar-table</artifactId>
+    <name>IoTDB: Core: Table-Antlr-Parser</name>
+    <description>Table Antlr parser for IoTDB.</description>
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
@@ -40,16 +44,14 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
+                <configuration>
+                    <visitor>true</visitor>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>antlr4</goal>
                         </goals>
-                        <configuration>
-                            <listener>false</listener>
-                            <visitor>true</visitor>
-                            <libDirectory>src/main/antlr4/org/apache/iotdb/db/qp/sql</libDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

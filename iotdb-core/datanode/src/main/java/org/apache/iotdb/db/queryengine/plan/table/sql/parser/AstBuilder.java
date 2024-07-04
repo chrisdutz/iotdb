@@ -131,9 +131,9 @@ import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Values;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.WhenClause;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.With;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.WithQuery;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlBaseVisitor;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.RelationalSqlParser;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlBaseVisitor;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
+import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
 import org.apache.iotdb.db.utils.DateTimeUtils;
 
 import com.google.common.collect.ImmutableList;
@@ -166,7 +166,7 @@ import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Ty
 import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Type.EXPLICIT;
 import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Type.ROLLUP;
 
-public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
+public class AstBuilder extends TableSqlBaseVisitor<Node> {
 
   private int parameterPosition;
 
@@ -180,33 +180,33 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSingleStatement(RelationalSqlParser.SingleStatementContext ctx) {
+  public Node visitSingleStatement(TableSqlParser.SingleStatementContext ctx) {
     return visit(ctx.statement());
   }
 
   @Override
-  public Node visitStandaloneExpression(RelationalSqlParser.StandaloneExpressionContext context) {
+  public Node visitStandaloneExpression(TableSqlParser.StandaloneExpressionContext context) {
     return visit(context.expression());
   }
 
   @Override
-  public Node visitStandaloneType(RelationalSqlParser.StandaloneTypeContext context) {
+  public Node visitStandaloneType(TableSqlParser.StandaloneTypeContext context) {
     return visit(context.type());
   }
 
   // ******************* statements **********************
   @Override
-  public Node visitUseDatabaseStatement(RelationalSqlParser.UseDatabaseStatementContext ctx) {
+  public Node visitUseDatabaseStatement(TableSqlParser.UseDatabaseStatementContext ctx) {
     return new Use(getLocation(ctx), (Identifier) visit(ctx.database));
   }
 
   @Override
-  public Node visitShowDatabasesStatement(RelationalSqlParser.ShowDatabasesStatementContext ctx) {
+  public Node visitShowDatabasesStatement(TableSqlParser.ShowDatabasesStatementContext ctx) {
     return new ShowDB(getLocation(ctx));
   }
 
   @Override
-  public Node visitCreateDbStatement(RelationalSqlParser.CreateDbStatementContext ctx) {
+  public Node visitCreateDbStatement(TableSqlParser.CreateDbStatementContext ctx) {
     List<Property> properties = ImmutableList.of();
     if (ctx.properties() != null) {
       properties = visit(ctx.properties().propertyAssignments().property(), Property.class);
@@ -220,12 +220,12 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDropDbStatement(RelationalSqlParser.DropDbStatementContext ctx) {
+  public Node visitDropDbStatement(TableSqlParser.DropDbStatementContext ctx) {
     return new DropDB(getLocation(ctx), (Identifier) visit(ctx.database), ctx.EXISTS() != null);
   }
 
   @Override
-  public Node visitCreateTableStatement(RelationalSqlParser.CreateTableStatementContext ctx) {
+  public Node visitCreateTableStatement(TableSqlParser.CreateTableStatementContext ctx) {
     List<Property> properties = ImmutableList.of();
     if (ctx.properties() != null) {
       properties = visit(ctx.properties().propertyAssignments().property(), Property.class);
@@ -242,7 +242,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitColumnDefinition(RelationalSqlParser.ColumnDefinitionContext ctx) {
+  public Node visitColumnDefinition(TableSqlParser.ColumnDefinitionContext ctx) {
     return new ColumnDefinition(
         getLocation(ctx),
         (Identifier) visit(ctx.identifier()),
@@ -254,13 +254,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDropTableStatement(RelationalSqlParser.DropTableStatementContext ctx) {
+  public Node visitDropTableStatement(TableSqlParser.DropTableStatementContext ctx) {
     return new DropTable(
         getLocation(ctx), getQualifiedName(ctx.qualifiedName()), ctx.EXISTS() != null);
   }
 
   @Override
-  public Node visitShowTableStatement(RelationalSqlParser.ShowTableStatementContext ctx) {
+  public Node visitShowTableStatement(TableSqlParser.ShowTableStatementContext ctx) {
     if (ctx.database == null) {
       return new ShowTables(getLocation(ctx));
     } else {
@@ -269,23 +269,23 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDescTableStatement(RelationalSqlParser.DescTableStatementContext ctx) {
+  public Node visitDescTableStatement(TableSqlParser.DescTableStatementContext ctx) {
     return new DescribeTable(getLocation(ctx), getQualifiedName(ctx.table));
   }
 
   @Override
-  public Node visitRenameTable(RelationalSqlParser.RenameTableContext ctx) {
+  public Node visitRenameTable(TableSqlParser.RenameTableContext ctx) {
     return new RenameTable(
         getLocation(ctx), getQualifiedName(ctx.from), (Identifier) visit(ctx.to));
   }
 
   @Override
-  public Node visitAddColumn(RelationalSqlParser.AddColumnContext ctx) {
+  public Node visitAddColumn(TableSqlParser.AddColumnContext ctx) {
     return new AddColumn(getQualifiedName(ctx.tableName), (ColumnDefinition) visit(ctx.column));
   }
 
   @Override
-  public Node visitRenameColumn(RelationalSqlParser.RenameColumnContext ctx) {
+  public Node visitRenameColumn(TableSqlParser.RenameColumnContext ctx) {
     return new RenameColumn(
         getLocation(ctx),
         getQualifiedName(ctx.tableName),
@@ -294,13 +294,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDropColumn(RelationalSqlParser.DropColumnContext ctx) {
+  public Node visitDropColumn(TableSqlParser.DropColumnContext ctx) {
     return new DropColumn(
         getLocation(ctx), getQualifiedName(ctx.tableName), (Identifier) visit(ctx.column));
   }
 
   @Override
-  public Node visitSetTableProperties(RelationalSqlParser.SetTablePropertiesContext ctx) {
+  public Node visitSetTableProperties(TableSqlParser.SetTablePropertiesContext ctx) {
     List<Property> properties = ImmutableList.of();
     if (ctx.propertyAssignments() != null) {
       properties = visit(ctx.propertyAssignments().property(), Property.class);
@@ -313,7 +313,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitCreateIndexStatement(RelationalSqlParser.CreateIndexStatementContext ctx) {
+  public Node visitCreateIndexStatement(TableSqlParser.CreateIndexStatementContext ctx) {
     return new CreateIndex(
         getLocation(ctx),
         getQualifiedName(ctx.tableName),
@@ -322,18 +322,18 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDropIndexStatement(RelationalSqlParser.DropIndexStatementContext ctx) {
+  public Node visitDropIndexStatement(TableSqlParser.DropIndexStatementContext ctx) {
     return new DropIndex(
         getLocation(ctx), getQualifiedName(ctx.tableName), (Identifier) visit(ctx.indexName));
   }
 
   @Override
-  public Node visitShowIndexStatement(RelationalSqlParser.ShowIndexStatementContext ctx) {
+  public Node visitShowIndexStatement(TableSqlParser.ShowIndexStatementContext ctx) {
     return new ShowIndex(getLocation(ctx), getQualifiedName(ctx.tableName));
   }
 
   @Override
-  public Node visitInsertStatement(RelationalSqlParser.InsertStatementContext ctx) {
+  public Node visitInsertStatement(TableSqlParser.InsertStatementContext ctx) {
     if (ctx.columnAliases() != null) {
       return new Insert(
           new Table(getQualifiedName(ctx.tableName)),
@@ -345,7 +345,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDeleteStatement(RelationalSqlParser.DeleteStatementContext ctx) {
+  public Node visitDeleteStatement(TableSqlParser.DeleteStatementContext ctx) {
     if (ctx.booleanExpression() != null) {
       return new Delete(
           getLocation(ctx),
@@ -358,7 +358,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitUpdateStatement(RelationalSqlParser.UpdateStatementContext ctx) {
+  public Node visitUpdateStatement(TableSqlParser.UpdateStatementContext ctx) {
     if (ctx.booleanExpression() != null) {
       return new Update(
           getLocation(ctx),
@@ -374,54 +374,54 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitUpdateAssignment(RelationalSqlParser.UpdateAssignmentContext ctx) {
+  public Node visitUpdateAssignment(TableSqlParser.UpdateAssignmentContext ctx) {
     return new UpdateAssignment(
         (Identifier) visit(ctx.identifier()), (Expression) visit(ctx.expression()));
   }
 
   @Override
-  public Node visitCreateFunctionStatement(RelationalSqlParser.CreateFunctionStatementContext ctx) {
+  public Node visitCreateFunctionStatement(TableSqlParser.CreateFunctionStatementContext ctx) {
     return super.visitCreateFunctionStatement(ctx);
   }
 
   @Override
-  public Node visitUriClause(RelationalSqlParser.UriClauseContext ctx) {
+  public Node visitUriClause(TableSqlParser.UriClauseContext ctx) {
     return super.visitUriClause(ctx);
   }
 
   @Override
-  public Node visitDropFunctionStatement(RelationalSqlParser.DropFunctionStatementContext ctx) {
+  public Node visitDropFunctionStatement(TableSqlParser.DropFunctionStatementContext ctx) {
     return super.visitDropFunctionStatement(ctx);
   }
 
   @Override
-  public Node visitShowFunctionsStatement(RelationalSqlParser.ShowFunctionsStatementContext ctx) {
+  public Node visitShowFunctionsStatement(TableSqlParser.ShowFunctionsStatementContext ctx) {
     return super.visitShowFunctionsStatement(ctx);
   }
 
   @Override
-  public Node visitLoadTsFileStatement(RelationalSqlParser.LoadTsFileStatementContext ctx) {
+  public Node visitLoadTsFileStatement(TableSqlParser.LoadTsFileStatementContext ctx) {
     return super.visitLoadTsFileStatement(ctx);
   }
 
   @Override
-  public Node visitShowDevicesStatement(RelationalSqlParser.ShowDevicesStatementContext ctx) {
+  public Node visitShowDevicesStatement(TableSqlParser.ShowDevicesStatementContext ctx) {
     return super.visitShowDevicesStatement(ctx);
   }
 
   @Override
-  public Node visitCountDevicesStatement(RelationalSqlParser.CountDevicesStatementContext ctx) {
+  public Node visitCountDevicesStatement(TableSqlParser.CountDevicesStatementContext ctx) {
     return super.visitCountDevicesStatement(ctx);
   }
 
   @Override
-  public Node visitShowClusterStatement(RelationalSqlParser.ShowClusterStatementContext ctx) {
+  public Node visitShowClusterStatement(TableSqlParser.ShowClusterStatementContext ctx) {
     boolean details = ctx.DETAILS() != null;
     return new ShowCluster(details);
   }
 
   @Override
-  public Node visitShowRegionsStatement(RelationalSqlParser.ShowRegionsStatementContext ctx) {
+  public Node visitShowRegionsStatement(TableSqlParser.ShowRegionsStatementContext ctx) {
     TConsensusGroupType regionType = null;
     if (ctx.DATA() != null) {
       regionType = TConsensusGroupType.DataRegion;
@@ -445,119 +445,116 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitShowDataNodesStatement(RelationalSqlParser.ShowDataNodesStatementContext ctx) {
+  public Node visitShowDataNodesStatement(TableSqlParser.ShowDataNodesStatementContext ctx) {
     return new ShowDataNodes();
   }
 
   @Override
-  public Node visitShowConfigNodesStatement(
-      RelationalSqlParser.ShowConfigNodesStatementContext ctx) {
+  public Node visitShowConfigNodesStatement(TableSqlParser.ShowConfigNodesStatementContext ctx) {
     return new ShowConfigNodes();
   }
 
   @Override
-  public Node visitShowClusterIdStatement(RelationalSqlParser.ShowClusterIdStatementContext ctx) {
+  public Node visitShowClusterIdStatement(TableSqlParser.ShowClusterIdStatementContext ctx) {
     return super.visitShowClusterIdStatement(ctx);
   }
 
   @Override
-  public Node visitShowRegionIdStatement(RelationalSqlParser.ShowRegionIdStatementContext ctx) {
+  public Node visitShowRegionIdStatement(TableSqlParser.ShowRegionIdStatementContext ctx) {
     return super.visitShowRegionIdStatement(ctx);
   }
 
   @Override
-  public Node visitShowTimeSlotListStatement(
-      RelationalSqlParser.ShowTimeSlotListStatementContext ctx) {
+  public Node visitShowTimeSlotListStatement(TableSqlParser.ShowTimeSlotListStatementContext ctx) {
     return super.visitShowTimeSlotListStatement(ctx);
   }
 
   @Override
   public Node visitCountTimeSlotListStatement(
-      RelationalSqlParser.CountTimeSlotListStatementContext ctx) {
+      TableSqlParser.CountTimeSlotListStatementContext ctx) {
     return super.visitCountTimeSlotListStatement(ctx);
   }
 
   @Override
   public Node visitShowSeriesSlotListStatement(
-      RelationalSqlParser.ShowSeriesSlotListStatementContext ctx) {
+      TableSqlParser.ShowSeriesSlotListStatementContext ctx) {
     return super.visitShowSeriesSlotListStatement(ctx);
   }
 
   @Override
-  public Node visitMigrateRegionStatement(RelationalSqlParser.MigrateRegionStatementContext ctx) {
+  public Node visitMigrateRegionStatement(TableSqlParser.MigrateRegionStatementContext ctx) {
     return super.visitMigrateRegionStatement(ctx);
   }
 
   @Override
-  public Node visitShowVariablesStatement(RelationalSqlParser.ShowVariablesStatementContext ctx) {
+  public Node visitShowVariablesStatement(TableSqlParser.ShowVariablesStatementContext ctx) {
     return super.visitShowVariablesStatement(ctx);
   }
 
   @Override
-  public Node visitFlushStatement(RelationalSqlParser.FlushStatementContext ctx) {
+  public Node visitFlushStatement(TableSqlParser.FlushStatementContext ctx) {
     return super.visitFlushStatement(ctx);
   }
 
   @Override
-  public Node visitClearCacheStatement(RelationalSqlParser.ClearCacheStatementContext ctx) {
+  public Node visitClearCacheStatement(TableSqlParser.ClearCacheStatementContext ctx) {
     return super.visitClearCacheStatement(ctx);
   }
 
   @Override
-  public Node visitRepairDataStatement(RelationalSqlParser.RepairDataStatementContext ctx) {
+  public Node visitRepairDataStatement(TableSqlParser.RepairDataStatementContext ctx) {
     return super.visitRepairDataStatement(ctx);
   }
 
   @Override
-  public Node visitSetSystemStatusStatement(
-      RelationalSqlParser.SetSystemStatusStatementContext ctx) {
+  public Node visitSetSystemStatusStatement(TableSqlParser.SetSystemStatusStatementContext ctx) {
     return super.visitSetSystemStatusStatement(ctx);
   }
 
   @Override
-  public Node visitShowVersionStatement(RelationalSqlParser.ShowVersionStatementContext ctx) {
+  public Node visitShowVersionStatement(TableSqlParser.ShowVersionStatementContext ctx) {
     return super.visitShowVersionStatement(ctx);
   }
 
   @Override
-  public Node visitShowQueriesStatement(RelationalSqlParser.ShowQueriesStatementContext ctx) {
+  public Node visitShowQueriesStatement(TableSqlParser.ShowQueriesStatementContext ctx) {
     return super.visitShowQueriesStatement(ctx);
   }
 
   @Override
-  public Node visitKillQueryStatement(RelationalSqlParser.KillQueryStatementContext ctx) {
+  public Node visitKillQueryStatement(TableSqlParser.KillQueryStatementContext ctx) {
     return super.visitKillQueryStatement(ctx);
   }
 
   @Override
   public Node visitLoadConfigurationStatement(
-      RelationalSqlParser.LoadConfigurationStatementContext ctx) {
+      TableSqlParser.LoadConfigurationStatementContext ctx) {
     return super.visitLoadConfigurationStatement(ctx);
   }
 
   @Override
-  public Node visitLocalOrClusterMode(RelationalSqlParser.LocalOrClusterModeContext ctx) {
+  public Node visitLocalOrClusterMode(TableSqlParser.LocalOrClusterModeContext ctx) {
     return super.visitLocalOrClusterMode(ctx);
   }
 
   @Override
-  public Node visitStatementDefault(RelationalSqlParser.StatementDefaultContext ctx) {
+  public Node visitStatementDefault(TableSqlParser.StatementDefaultContext ctx) {
     return super.visitStatementDefault(ctx);
   }
 
   @Override
-  public Node visitExplain(RelationalSqlParser.ExplainContext ctx) {
+  public Node visitExplain(TableSqlParser.ExplainContext ctx) {
     return new Explain(getLocation(ctx), (Statement) visit(ctx.query()));
   }
 
   @Override
-  public Node visitExplainAnalyze(RelationalSqlParser.ExplainAnalyzeContext ctx) {
+  public Node visitExplainAnalyze(TableSqlParser.ExplainAnalyzeContext ctx) {
     return super.visitExplainAnalyze(ctx);
   }
 
   // ********************** query expressions ********************
   @Override
-  public Node visitQuery(RelationalSqlParser.QueryContext ctx) {
+  public Node visitQuery(TableSqlParser.QueryContext ctx) {
     Query body = (Query) visit(ctx.queryNoWith());
 
     return new Query(
@@ -570,13 +567,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitWith(RelationalSqlParser.WithContext ctx) {
+  public Node visitWith(TableSqlParser.WithContext ctx) {
     return new With(
         getLocation(ctx), ctx.RECURSIVE() != null, visit(ctx.namedQuery(), WithQuery.class));
   }
 
   @Override
-  public Node visitNamedQuery(RelationalSqlParser.NamedQueryContext ctx) {
+  public Node visitNamedQuery(TableSqlParser.NamedQueryContext ctx) {
     if (ctx.columnAliases() != null) {
       List<Identifier> columns = visit(ctx.columnAliases().identifier(), Identifier.class);
       return new WithQuery(
@@ -588,7 +585,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitQueryNoWith(RelationalSqlParser.QueryNoWithContext ctx) {
+  public Node visitQueryNoWith(TableSqlParser.QueryNoWithContext ctx) {
     QueryBody term = (QueryBody) visit(ctx.queryTerm());
 
     Optional<OrderBy> orderBy = Optional.empty();
@@ -660,7 +657,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitQuerySpecification(RelationalSqlParser.QuerySpecificationContext ctx) {
+  public Node visitQuerySpecification(TableSqlParser.QuerySpecificationContext ctx) {
     Optional<Relation> from = Optional.empty();
     List<SelectItem> selectItems = visit(ctx.selectItem(), SelectItem.class);
 
@@ -690,7 +687,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSelectSingle(RelationalSqlParser.SelectSingleContext ctx) {
+  public Node visitSelectSingle(TableSqlParser.SelectSingleContext ctx) {
     if (ctx.identifier() != null) {
       return new SingleColumn(
           getLocation(ctx),
@@ -702,7 +699,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSelectAll(RelationalSqlParser.SelectAllContext ctx) {
+  public Node visitSelectAll(TableSqlParser.SelectAllContext ctx) {
     List<Identifier> aliases = ImmutableList.of();
     if (ctx.columnAliases() != null) {
       aliases = visit(ctx.columnAliases().identifier(), Identifier.class);
@@ -716,7 +713,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitGroupBy(RelationalSqlParser.GroupByContext ctx) {
+  public Node visitGroupBy(TableSqlParser.GroupByContext ctx) {
     return new GroupBy(
         getLocation(ctx),
         isDistinct(ctx.setQuantifier()),
@@ -724,7 +721,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitTimenGrouping(RelationalSqlParser.TimenGroupingContext ctx) {
+  public Node visitTimenGrouping(TableSqlParser.TimenGroupingContext ctx) {
     long startTime = 0;
     long endTime = 0;
     boolean leftCRightO = true;
@@ -755,18 +752,18 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitLeftClosedRightOpen(RelationalSqlParser.LeftClosedRightOpenContext ctx) {
+  public Node visitLeftClosedRightOpen(TableSqlParser.LeftClosedRightOpenContext ctx) {
     return getTimeRange(ctx.timeValue(0), ctx.timeValue(1), true);
   }
 
   @Override
-  public Node visitLeftOpenRightClosed(RelationalSqlParser.LeftOpenRightClosedContext ctx) {
+  public Node visitLeftOpenRightClosed(TableSqlParser.LeftOpenRightClosedContext ctx) {
     return getTimeRange(ctx.timeValue(0), ctx.timeValue(1), false);
   }
 
   private TimeRange getTimeRange(
-      RelationalSqlParser.TimeValueContext left,
-      RelationalSqlParser.TimeValueContext right,
+      TableSqlParser.TimeValueContext left,
+      TableSqlParser.TimeValueContext right,
       boolean leftCRightO) {
     long currentTime = CommonDateTimeUtils.currentTime();
     long startTime = parseTimeValue(left, currentTime);
@@ -777,7 +774,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
     return new TimeRange(startTime, endTime, leftCRightO);
   }
 
-  private long parseTimeValue(RelationalSqlParser.TimeValueContext ctx, long currentTime) {
+  private long parseTimeValue(TableSqlParser.TimeValueContext ctx, long currentTime) {
     if (ctx.INTEGER_VALUE() != null) {
       try {
         if (ctx.MINUS() != null) {
@@ -793,8 +790,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
     }
   }
 
-  private Long parseDateExpression(
-      RelationalSqlParser.DateExpressionContext ctx, long currentTime) {
+  private Long parseDateExpression(TableSqlParser.DateExpressionContext ctx, long currentTime) {
     long time;
     time = parseDateTimeFormat(ctx.getChild(0).getText(), currentTime, zoneId);
     for (int i = 1; i < ctx.getChildCount(); i = i + 2) {
@@ -808,38 +804,38 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitVariationGrouping(RelationalSqlParser.VariationGroupingContext ctx) {
+  public Node visitVariationGrouping(TableSqlParser.VariationGroupingContext ctx) {
     return super.visitVariationGrouping(ctx);
   }
 
   @Override
-  public Node visitConditionGrouping(RelationalSqlParser.ConditionGroupingContext ctx) {
+  public Node visitConditionGrouping(TableSqlParser.ConditionGroupingContext ctx) {
     return super.visitConditionGrouping(ctx);
   }
 
   @Override
-  public Node visitSessionGrouping(RelationalSqlParser.SessionGroupingContext ctx) {
+  public Node visitSessionGrouping(TableSqlParser.SessionGroupingContext ctx) {
     return super.visitSessionGrouping(ctx);
   }
 
   @Override
-  public Node visitCountGrouping(RelationalSqlParser.CountGroupingContext ctx) {
+  public Node visitCountGrouping(TableSqlParser.CountGroupingContext ctx) {
     return super.visitCountGrouping(ctx);
   }
 
   @Override
-  public Node visitKeepExpression(RelationalSqlParser.KeepExpressionContext ctx) {
+  public Node visitKeepExpression(TableSqlParser.KeepExpressionContext ctx) {
     return super.visitKeepExpression(ctx);
   }
 
   @Override
-  public Node visitSingleGroupingSet(RelationalSqlParser.SingleGroupingSetContext ctx) {
+  public Node visitSingleGroupingSet(TableSqlParser.SingleGroupingSetContext ctx) {
     return new SimpleGroupBy(
         getLocation(ctx), visit(ctx.groupingSet().expression(), Expression.class));
   }
 
   @Override
-  public Node visitRollup(RelationalSqlParser.RollupContext ctx) {
+  public Node visitRollup(TableSqlParser.RollupContext ctx) {
     return new GroupingSets(
         getLocation(ctx),
         ROLLUP,
@@ -849,7 +845,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitCube(RelationalSqlParser.CubeContext ctx) {
+  public Node visitCube(TableSqlParser.CubeContext ctx) {
     return new GroupingSets(
         getLocation(ctx),
         CUBE,
@@ -859,7 +855,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitMultipleGroupingSets(RelationalSqlParser.MultipleGroupingSetsContext ctx) {
+  public Node visitMultipleGroupingSets(TableSqlParser.MultipleGroupingSetsContext ctx) {
     return new GroupingSets(
         getLocation(ctx),
         EXPLICIT,
@@ -869,18 +865,18 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSetOperation(RelationalSqlParser.SetOperationContext ctx) {
+  public Node visitSetOperation(TableSqlParser.SetOperationContext ctx) {
     QueryBody left = (QueryBody) visit(ctx.left);
     QueryBody right = (QueryBody) visit(ctx.right);
 
     boolean distinct = ctx.setQuantifier() == null || ctx.setQuantifier().DISTINCT() != null;
 
     switch (ctx.operator.getType()) {
-      case RelationalSqlLexer.UNION:
+      case TableSqlLexer.UNION:
         return new Union(getLocation(ctx.UNION()), ImmutableList.of(left, right), distinct);
-      case RelationalSqlLexer.INTERSECT:
+      case TableSqlLexer.INTERSECT:
         return new Intersect(getLocation(ctx.INTERSECT()), ImmutableList.of(left, right), distinct);
-      case RelationalSqlLexer.EXCEPT:
+      case TableSqlLexer.EXCEPT:
         return new Except(getLocation(ctx.EXCEPT()), left, right, distinct);
       default:
         throw new IllegalArgumentException("Unsupported set operation: " + ctx.operator.getText());
@@ -888,36 +884,36 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitProperty(RelationalSqlParser.PropertyContext ctx) {
+  public Node visitProperty(TableSqlParser.PropertyContext ctx) {
     NodeLocation location = getLocation(ctx);
     Identifier name = (Identifier) visit(ctx.identifier());
-    RelationalSqlParser.PropertyValueContext valueContext = ctx.propertyValue();
-    if (valueContext instanceof RelationalSqlParser.DefaultPropertyValueContext) {
+    TableSqlParser.PropertyValueContext valueContext = ctx.propertyValue();
+    if (valueContext instanceof TableSqlParser.DefaultPropertyValueContext) {
       return new Property(location, name);
     }
     Expression value =
         (Expression)
-            visit(((RelationalSqlParser.NonDefaultPropertyValueContext) valueContext).expression());
+            visit(((TableSqlParser.NonDefaultPropertyValueContext) valueContext).expression());
     return new Property(location, name, value);
   }
 
   @Override
-  public Node visitTable(RelationalSqlParser.TableContext ctx) {
+  public Node visitTable(TableSqlParser.TableContext ctx) {
     return new Table(getLocation(ctx), getQualifiedName(ctx.qualifiedName()));
   }
 
   @Override
-  public Node visitInlineTable(RelationalSqlParser.InlineTableContext ctx) {
+  public Node visitInlineTable(TableSqlParser.InlineTableContext ctx) {
     return new Values(getLocation(ctx), visit(ctx.expression(), Expression.class));
   }
 
   @Override
-  public Node visitSubquery(RelationalSqlParser.SubqueryContext ctx) {
+  public Node visitSubquery(TableSqlParser.SubqueryContext ctx) {
     return new TableSubquery(getLocation(ctx), (Query) visit(ctx.queryNoWith()));
   }
 
   @Override
-  public Node visitSortItem(RelationalSqlParser.SortItemContext ctx) {
+  public Node visitSortItem(TableSqlParser.SortItemContext ctx) {
     return new SortItem(
         getLocation(ctx),
         (Expression) visit(ctx.expression()),
@@ -930,12 +926,12 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitUnquotedIdentifier(RelationalSqlParser.UnquotedIdentifierContext ctx) {
+  public Node visitUnquotedIdentifier(TableSqlParser.UnquotedIdentifierContext ctx) {
     return new Identifier(getLocation(ctx), ctx.getText(), false);
   }
 
   @Override
-  public Node visitQuotedIdentifier(RelationalSqlParser.QuotedIdentifierContext ctx) {
+  public Node visitQuotedIdentifier(TableSqlParser.QuotedIdentifierContext ctx) {
     String token = ctx.getText();
     String identifier = token.substring(1, token.length() - 1).replace("\"\"", "\"");
 
@@ -944,18 +940,18 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   // ***************** boolean expressions ******************
   @Override
-  public Node visitLogicalNot(RelationalSqlParser.LogicalNotContext ctx) {
+  public Node visitLogicalNot(TableSqlParser.LogicalNotContext ctx) {
     return new NotExpression(getLocation(ctx), (Expression) visit(ctx.booleanExpression()));
   }
 
   @Override
-  public Node visitOr(RelationalSqlParser.OrContext ctx) {
+  public Node visitOr(TableSqlParser.OrContext ctx) {
     List<ParserRuleContext> terms =
         flatten(
             ctx,
             element -> {
-              if (element instanceof RelationalSqlParser.OrContext) {
-                RelationalSqlParser.OrContext or = (RelationalSqlParser.OrContext) element;
+              if (element instanceof TableSqlParser.OrContext) {
+                TableSqlParser.OrContext or = (TableSqlParser.OrContext) element;
                 return Optional.of(or.booleanExpression());
               }
 
@@ -967,13 +963,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitAnd(RelationalSqlParser.AndContext ctx) {
+  public Node visitAnd(TableSqlParser.AndContext ctx) {
     List<ParserRuleContext> terms =
         flatten(
             ctx,
             element -> {
-              if (element instanceof RelationalSqlParser.AndContext) {
-                RelationalSqlParser.AndContext and = (RelationalSqlParser.AndContext) element;
+              if (element instanceof TableSqlParser.AndContext) {
+                TableSqlParser.AndContext and = (TableSqlParser.AndContext) element;
                 return Optional.of(and.booleanExpression());
               }
 
@@ -1009,7 +1005,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   // *************** from clause *****************
   @Override
-  public Node visitJoinRelation(RelationalSqlParser.JoinRelationContext ctx) {
+  public Node visitJoinRelation(TableSqlParser.JoinRelationContext ctx) {
     Relation left = (Relation) visit(ctx.left);
     Relation right;
 
@@ -1048,7 +1044,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitAliasedRelation(RelationalSqlParser.AliasedRelationContext ctx) {
+  public Node visitAliasedRelation(TableSqlParser.AliasedRelationContext ctx) {
     Relation child = (Relation) visit(ctx.relationPrimary());
 
     if (ctx.identifier() == null) {
@@ -1065,24 +1061,24 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitTableName(RelationalSqlParser.TableNameContext ctx) {
+  public Node visitTableName(TableSqlParser.TableNameContext ctx) {
     return new Table(getLocation(ctx), getQualifiedName(ctx.qualifiedName()));
   }
 
   @Override
-  public Node visitSubqueryRelation(RelationalSqlParser.SubqueryRelationContext ctx) {
+  public Node visitSubqueryRelation(TableSqlParser.SubqueryRelationContext ctx) {
     return new TableSubquery(getLocation(ctx), (Query) visit(ctx.query()));
   }
 
   @Override
-  public Node visitParenthesizedRelation(RelationalSqlParser.ParenthesizedRelationContext ctx) {
+  public Node visitParenthesizedRelation(TableSqlParser.ParenthesizedRelationContext ctx) {
     return visit(ctx.relation());
   }
 
   // ********************* predicates *******************
 
   @Override
-  public Node visitPredicated(RelationalSqlParser.PredicatedContext ctx) {
+  public Node visitPredicated(TableSqlParser.PredicatedContext ctx) {
     if (ctx.predicate() != null) {
       return visit(ctx.predicate());
     }
@@ -1091,7 +1087,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitComparison(RelationalSqlParser.ComparisonContext ctx) {
+  public Node visitComparison(TableSqlParser.ComparisonContext ctx) {
     return new ComparisonExpression(
         getLocation(ctx.comparisonOperator()),
         getComparisonOperator(((TerminalNode) ctx.comparisonOperator().getChild(0)).getSymbol()),
@@ -1100,7 +1096,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitQuantifiedComparison(RelationalSqlParser.QuantifiedComparisonContext ctx) {
+  public Node visitQuantifiedComparison(TableSqlParser.QuantifiedComparisonContext ctx) {
     return new QuantifiedComparisonExpression(
         getLocation(ctx.comparisonOperator()),
         getComparisonOperator(((TerminalNode) ctx.comparisonOperator().getChild(0)).getSymbol()),
@@ -1111,7 +1107,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitBetween(RelationalSqlParser.BetweenContext ctx) {
+  public Node visitBetween(TableSqlParser.BetweenContext ctx) {
     Expression expression =
         new BetweenPredicate(
             getLocation(ctx),
@@ -1127,7 +1123,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitInList(RelationalSqlParser.InListContext ctx) {
+  public Node visitInList(TableSqlParser.InListContext ctx) {
     Expression result =
         new InPredicate(
             getLocation(ctx),
@@ -1142,7 +1138,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitInSubquery(RelationalSqlParser.InSubqueryContext ctx) {
+  public Node visitInSubquery(TableSqlParser.InSubqueryContext ctx) {
     Expression result =
         new InPredicate(
             getLocation(ctx),
@@ -1157,7 +1153,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitLike(RelationalSqlParser.LikeContext ctx) {
+  public Node visitLike(TableSqlParser.LikeContext ctx) {
     Expression result;
     if (ctx.escape != null) {
       result =
@@ -1180,7 +1176,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitNullPredicate(RelationalSqlParser.NullPredicateContext ctx) {
+  public Node visitNullPredicate(TableSqlParser.NullPredicateContext ctx) {
     Expression child = (Expression) visit(ctx.value);
 
     if (ctx.NOT() == null) {
@@ -1191,7 +1187,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitDistinctFrom(RelationalSqlParser.DistinctFromContext ctx) {
+  public Node visitDistinctFrom(TableSqlParser.DistinctFromContext ctx) {
     Expression expression =
         new ComparisonExpression(
             getLocation(ctx),
@@ -1207,20 +1203,20 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitExists(RelationalSqlParser.ExistsContext ctx) {
+  public Node visitExists(TableSqlParser.ExistsContext ctx) {
     return new ExistsPredicate(
         getLocation(ctx), new SubqueryExpression(getLocation(ctx), (Query) visit(ctx.query())));
   }
 
   // ************** value expressions **************
   @Override
-  public Node visitArithmeticUnary(RelationalSqlParser.ArithmeticUnaryContext ctx) {
+  public Node visitArithmeticUnary(TableSqlParser.ArithmeticUnaryContext ctx) {
     Expression child = (Expression) visit(ctx.valueExpression());
 
     switch (ctx.operator.getType()) {
-      case RelationalSqlLexer.MINUS:
+      case TableSqlLexer.MINUS:
         return ArithmeticUnaryExpression.negative(getLocation(ctx), child);
-      case RelationalSqlLexer.PLUS:
+      case TableSqlLexer.PLUS:
         return ArithmeticUnaryExpression.positive(getLocation(ctx), child);
       default:
         throw new UnsupportedOperationException("Unsupported sign: " + ctx.operator.getText());
@@ -1228,7 +1224,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitArithmeticBinary(RelationalSqlParser.ArithmeticBinaryContext ctx) {
+  public Node visitArithmeticBinary(TableSqlParser.ArithmeticBinaryContext ctx) {
     return new ArithmeticBinaryExpression(
         getLocation(ctx.operator),
         getArithmeticBinaryOperator(ctx.operator),
@@ -1237,7 +1233,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitConcatenation(RelationalSqlParser.ConcatenationContext ctx) {
+  public Node visitConcatenation(TableSqlParser.ConcatenationContext ctx) {
     return new FunctionCall(
         getLocation(ctx.CONCAT()),
         QualifiedName.of("concat"),
@@ -1246,29 +1242,29 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   // ********************* primary expressions **********************
   @Override
-  public Node visitParenthesizedExpression(RelationalSqlParser.ParenthesizedExpressionContext ctx) {
+  public Node visitParenthesizedExpression(TableSqlParser.ParenthesizedExpressionContext ctx) {
     return visit(ctx.expression());
   }
 
   @Override
-  public Node visitRowConstructor(RelationalSqlParser.RowConstructorContext context) {
+  public Node visitRowConstructor(TableSqlParser.RowConstructorContext context) {
     return new Row(getLocation(context), visit(context.expression(), Expression.class));
   }
 
   @Override
-  public Node visitCast(RelationalSqlParser.CastContext ctx) {
+  public Node visitCast(TableSqlParser.CastContext ctx) {
     return new Cast(
         getLocation(ctx), (Expression) visit(ctx.expression()), (DataType) visit(ctx.type()));
   }
 
   @Override
-  public Node visitSpecialDateTimeFunction(RelationalSqlParser.SpecialDateTimeFunctionContext ctx) {
+  public Node visitSpecialDateTimeFunction(TableSqlParser.SpecialDateTimeFunctionContext ctx) {
     CurrentTime.Function function = getDateTimeFunctionType(ctx.name);
     return new CurrentTime(getLocation(ctx), function);
   }
 
   @Override
-  public Node visitTrim(RelationalSqlParser.TrimContext ctx) {
+  public Node visitTrim(TableSqlParser.TrimContext ctx) {
     if (ctx.FROM() != null && ctx.trimsSpecification() == null && ctx.trimChar == null) {
       throw parseError(
           "The 'trim' function must have specification, char or both arguments when it takes FROM",
@@ -1292,11 +1288,11 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static Trim.Specification toTrimSpecification(Token token) {
     switch (token.getType()) {
-      case RelationalSqlLexer.BOTH:
+      case TableSqlLexer.BOTH:
         return Trim.Specification.BOTH;
-      case RelationalSqlLexer.LEADING:
+      case TableSqlLexer.LEADING:
         return Trim.Specification.LEADING;
-      case RelationalSqlLexer.TRAILING:
+      case TableSqlLexer.TRAILING:
         return Trim.Specification.TRAILING;
       default:
         throw new IllegalArgumentException("Unsupported trim specification: " + token.getText());
@@ -1304,7 +1300,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSubstring(RelationalSqlParser.SubstringContext ctx) {
+  public Node visitSubstring(TableSqlParser.SubstringContext ctx) {
     return new FunctionCall(
         getLocation(ctx),
         QualifiedName.of("substr"),
@@ -1312,33 +1308,33 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitCurrentDatabase(RelationalSqlParser.CurrentDatabaseContext ctx) {
+  public Node visitCurrentDatabase(TableSqlParser.CurrentDatabaseContext ctx) {
     return new CurrentDatabase(getLocation(ctx));
   }
 
   @Override
-  public Node visitCurrentUser(RelationalSqlParser.CurrentUserContext ctx) {
+  public Node visitCurrentUser(TableSqlParser.CurrentUserContext ctx) {
     return new CurrentUser(getLocation(ctx));
   }
 
   @Override
-  public Node visitSubqueryExpression(RelationalSqlParser.SubqueryExpressionContext ctx) {
+  public Node visitSubqueryExpression(TableSqlParser.SubqueryExpressionContext ctx) {
     return new SubqueryExpression(getLocation(ctx), (Query) visit(ctx.query()));
   }
 
   @Override
-  public Node visitDereference(RelationalSqlParser.DereferenceContext ctx) {
+  public Node visitDereference(TableSqlParser.DereferenceContext ctx) {
     return new DereferenceExpression(
         getLocation(ctx), (Expression) visit(ctx.base), (Identifier) visit(ctx.fieldName));
   }
 
   @Override
-  public Node visitColumnReference(RelationalSqlParser.ColumnReferenceContext ctx) {
+  public Node visitColumnReference(TableSqlParser.ColumnReferenceContext ctx) {
     return visit(ctx.identifier());
   }
 
   @Override
-  public Node visitSimpleCase(RelationalSqlParser.SimpleCaseContext ctx) {
+  public Node visitSimpleCase(TableSqlParser.SimpleCaseContext ctx) {
     if (ctx.elseExpression != null) {
       return new SimpleCaseExpression(
           getLocation(ctx),
@@ -1354,7 +1350,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitSearchedCase(RelationalSqlParser.SearchedCaseContext ctx) {
+  public Node visitSearchedCase(TableSqlParser.SearchedCaseContext ctx) {
     if (ctx.elseExpression != null) {
       return new SearchedCaseExpression(
           getLocation(ctx),
@@ -1367,13 +1363,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitWhenClause(RelationalSqlParser.WhenClauseContext ctx) {
+  public Node visitWhenClause(TableSqlParser.WhenClauseContext ctx) {
     return new WhenClause(
         getLocation(ctx), (Expression) visit(ctx.condition), (Expression) visit(ctx.result));
   }
 
   @Override
-  public Node visitFunctionCall(RelationalSqlParser.FunctionCallContext ctx) {
+  public Node visitFunctionCall(TableSqlParser.FunctionCallContext ctx) {
 
     QualifiedName name = getQualifiedName(ctx.qualifiedName());
 
@@ -1431,55 +1427,55 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   // ************** literals **************
 
   @Override
-  public Node visitNullLiteral(RelationalSqlParser.NullLiteralContext ctx) {
+  public Node visitNullLiteral(TableSqlParser.NullLiteralContext ctx) {
     return new NullLiteral(getLocation(ctx));
   }
 
   @Override
-  public Node visitBasicStringLiteral(RelationalSqlParser.BasicStringLiteralContext ctx) {
+  public Node visitBasicStringLiteral(TableSqlParser.BasicStringLiteralContext ctx) {
     return new StringLiteral(getLocation(ctx), unquote(ctx.STRING().getText()));
   }
 
   @Override
-  public Node visitUnicodeStringLiteral(RelationalSqlParser.UnicodeStringLiteralContext ctx) {
+  public Node visitUnicodeStringLiteral(TableSqlParser.UnicodeStringLiteralContext ctx) {
     return new StringLiteral(getLocation(ctx), decodeUnicodeLiteral(ctx));
   }
 
   @Override
-  public Node visitBinaryLiteral(RelationalSqlParser.BinaryLiteralContext ctx) {
+  public Node visitBinaryLiteral(TableSqlParser.BinaryLiteralContext ctx) {
     String raw = ctx.BINARY_LITERAL().getText();
     return new BinaryLiteral(getLocation(ctx), unquote(raw.substring(1)));
   }
 
   @Override
-  public Node visitDecimalLiteral(RelationalSqlParser.DecimalLiteralContext ctx) {
+  public Node visitDecimalLiteral(TableSqlParser.DecimalLiteralContext ctx) {
     return new DoubleLiteral(getLocation(ctx), ctx.getText());
   }
 
   @Override
-  public Node visitDoubleLiteral(RelationalSqlParser.DoubleLiteralContext ctx) {
+  public Node visitDoubleLiteral(TableSqlParser.DoubleLiteralContext ctx) {
     return new DoubleLiteral(getLocation(ctx), ctx.getText());
   }
 
   @Override
-  public Node visitIntegerLiteral(RelationalSqlParser.IntegerLiteralContext ctx) {
+  public Node visitIntegerLiteral(TableSqlParser.IntegerLiteralContext ctx) {
     return new LongLiteral(getLocation(ctx), ctx.getText());
   }
 
   @Override
-  public Node visitBooleanLiteral(RelationalSqlParser.BooleanLiteralContext ctx) {
+  public Node visitBooleanLiteral(TableSqlParser.BooleanLiteralContext ctx) {
     return new BooleanLiteral(getLocation(ctx), ctx.getText());
   }
 
   @Override
-  public Node visitParameter(RelationalSqlParser.ParameterContext ctx) {
+  public Node visitParameter(TableSqlParser.ParameterContext ctx) {
     Parameter parameter = new Parameter(getLocation(ctx), parameterPosition);
     parameterPosition++;
     return parameter;
   }
 
   @Override
-  public Node visitIdentifierOrString(RelationalSqlParser.IdentifierOrStringContext ctx) {
+  public Node visitIdentifierOrString(TableSqlParser.IdentifierOrStringContext ctx) {
     String s = null;
     if (ctx.identifier() != null) {
       return visit(ctx.identifier());
@@ -1491,13 +1487,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitIntervalField(RelationalSqlParser.IntervalFieldContext ctx) {
+  public Node visitIntervalField(TableSqlParser.IntervalFieldContext ctx) {
     return super.visitIntervalField(ctx);
   }
 
   // ***************** arguments *****************
   @Override
-  public Node visitGenericType(RelationalSqlParser.GenericTypeContext ctx) {
+  public Node visitGenericType(TableSqlParser.GenericTypeContext ctx) {
     List<DataTypeParameter> parameters =
         ctx.typeParameter().stream()
             .map(this::visit)
@@ -1508,7 +1504,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
   }
 
   @Override
-  public Node visitTypeParameter(RelationalSqlParser.TypeParameterContext ctx) {
+  public Node visitTypeParameter(TableSqlParser.TypeParameterContext ctx) {
     if (ctx.INTEGER_VALUE() != null) {
       return new NumericParameter(getLocation(ctx), ctx.getText());
     }
@@ -1524,8 +1520,7 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
     UNICODE_SEQUENCE
   }
 
-  private static String decodeUnicodeLiteral(
-      RelationalSqlParser.UnicodeStringLiteralContext context) {
+  private static String decodeUnicodeLiteral(TableSqlParser.UnicodeStringLiteralContext context) {
     char escape;
     if (context.UESCAPE() != null) {
       String escapeString = unquote(context.STRING().getText());
@@ -1628,11 +1623,11 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
     return value.substring(1, value.length() - 1).replace("''", "'");
   }
 
-  private QualifiedName getQualifiedName(RelationalSqlParser.QualifiedNameContext context) {
+  private QualifiedName getQualifiedName(TableSqlParser.QualifiedNameContext context) {
     return QualifiedName.of(visit(context.identifier(), Identifier.class));
   }
 
-  private static boolean isDistinct(RelationalSqlParser.SetQuantifierContext setQuantifier) {
+  private static boolean isDistinct(TableSqlParser.SetQuantifierContext setQuantifier) {
     return setQuantifier != null && setQuantifier.DISTINCT() != null;
   }
 
@@ -1657,13 +1652,13 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
       return MEASUREMENT;
     }
     switch (category.getType()) {
-      case RelationalSqlLexer.ID:
+      case TableSqlLexer.ID:
         return ID;
-      case RelationalSqlLexer.ATTRIBUTE:
+      case TableSqlLexer.ATTRIBUTE:
         return ATTRIBUTE;
-      case RelationalSqlLexer.TIME:
+      case TableSqlLexer.TIME:
         return TIME;
-      case RelationalSqlLexer.MEASUREMENT:
+      case TableSqlLexer.MEASUREMENT:
         return MEASUREMENT;
       default:
         throw new UnsupportedOperationException(
@@ -1673,15 +1668,15 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static ArithmeticBinaryExpression.Operator getArithmeticBinaryOperator(Token operator) {
     switch (operator.getType()) {
-      case RelationalSqlLexer.PLUS:
+      case TableSqlLexer.PLUS:
         return ArithmeticBinaryExpression.Operator.ADD;
-      case RelationalSqlLexer.MINUS:
+      case TableSqlLexer.MINUS:
         return ArithmeticBinaryExpression.Operator.SUBTRACT;
-      case RelationalSqlLexer.ASTERISK:
+      case TableSqlLexer.ASTERISK:
         return ArithmeticBinaryExpression.Operator.MULTIPLY;
-      case RelationalSqlLexer.SLASH:
+      case TableSqlLexer.SLASH:
         return ArithmeticBinaryExpression.Operator.DIVIDE;
-      case RelationalSqlLexer.PERCENT:
+      case TableSqlLexer.PERCENT:
         return ArithmeticBinaryExpression.Operator.MODULUS;
       default:
         throw new UnsupportedOperationException("Unsupported operator: " + operator.getText());
@@ -1690,17 +1685,17 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static ComparisonExpression.Operator getComparisonOperator(Token symbol) {
     switch (symbol.getType()) {
-      case RelationalSqlLexer.EQ:
+      case TableSqlLexer.EQ:
         return ComparisonExpression.Operator.EQUAL;
-      case RelationalSqlLexer.NEQ:
+      case TableSqlLexer.NEQ:
         return ComparisonExpression.Operator.NOT_EQUAL;
-      case RelationalSqlLexer.LT:
+      case TableSqlLexer.LT:
         return ComparisonExpression.Operator.LESS_THAN;
-      case RelationalSqlLexer.LTE:
+      case TableSqlLexer.LTE:
         return ComparisonExpression.Operator.LESS_THAN_OR_EQUAL;
-      case RelationalSqlLexer.GT:
+      case TableSqlLexer.GT:
         return ComparisonExpression.Operator.GREATER_THAN;
-      case RelationalSqlLexer.GTE:
+      case TableSqlLexer.GTE:
         return ComparisonExpression.Operator.GREATER_THAN_OR_EQUAL;
       default:
         throw new IllegalArgumentException("Unsupported operator: " + symbol.getText());
@@ -1709,16 +1704,16 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static CurrentTime.Function getDateTimeFunctionType(Token token) {
     switch (token.getType()) {
-      case RelationalSqlLexer.CURRENT_DATE:
+      case TableSqlLexer.CURRENT_DATE:
         return CurrentTime.Function.DATE;
-      case RelationalSqlLexer.CURRENT_TIME:
+      case TableSqlLexer.CURRENT_TIME:
         return CurrentTime.Function.TIME;
-      case RelationalSqlLexer.CURRENT_TIMESTAMP:
-      case RelationalSqlLexer.NOW:
+      case TableSqlLexer.CURRENT_TIMESTAMP:
+      case TableSqlLexer.NOW:
         return CurrentTime.Function.TIMESTAMP;
-      case RelationalSqlLexer.LOCALTIME:
+      case TableSqlLexer.LOCALTIME:
         return CurrentTime.Function.LOCALTIME;
-      case RelationalSqlLexer.LOCALTIMESTAMP:
+      case TableSqlLexer.LOCALTIMESTAMP:
         return CurrentTime.Function.LOCALTIMESTAMP;
       default:
         throw new IllegalArgumentException("Unsupported special function: " + token.getText());
@@ -1727,9 +1722,9 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static SortItem.NullOrdering getNullOrderingType(Token token) {
     switch (token.getType()) {
-      case RelationalSqlLexer.FIRST:
+      case TableSqlLexer.FIRST:
         return SortItem.NullOrdering.FIRST;
-      case RelationalSqlLexer.LAST:
+      case TableSqlLexer.LAST:
         return SortItem.NullOrdering.LAST;
       default:
         throw new IllegalArgumentException("Unsupported ordering: " + token.getText());
@@ -1738,9 +1733,9 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static SortItem.Ordering getOrderingType(Token token) {
     switch (token.getType()) {
-      case RelationalSqlLexer.ASC:
+      case TableSqlLexer.ASC:
         return SortItem.Ordering.ASCENDING;
-      case RelationalSqlLexer.DESC:
+      case TableSqlLexer.DESC:
         return SortItem.Ordering.DESCENDING;
       default:
         throw new IllegalArgumentException("Unsupported ordering: " + token.getText());
@@ -1749,18 +1744,18 @@ public class AstBuilder extends RelationalSqlBaseVisitor<Node> {
 
   private static QuantifiedComparisonExpression.Quantifier getComparisonQuantifier(Token symbol) {
     switch (symbol.getType()) {
-      case RelationalSqlLexer.ALL:
+      case TableSqlLexer.ALL:
         return QuantifiedComparisonExpression.Quantifier.ALL;
-      case RelationalSqlLexer.ANY:
+      case TableSqlLexer.ANY:
         return QuantifiedComparisonExpression.Quantifier.ANY;
-      case RelationalSqlLexer.SOME:
+      case TableSqlLexer.SOME:
         return QuantifiedComparisonExpression.Quantifier.SOME;
       default:
         throw new IllegalArgumentException("Unsupported quantifier: " + symbol.getText());
     }
   }
 
-  private List<Identifier> getIdentifiers(List<RelationalSqlParser.IdentifierContext> identifiers) {
+  private List<Identifier> getIdentifiers(List<TableSqlParser.IdentifierContext> identifiers) {
     return identifiers.stream().map(context -> (Identifier) visit(context)).collect(toList());
   }
 

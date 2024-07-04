@@ -17,7 +17,7 @@
  * under the License.
  */
 
-grammar RelationalSql;
+grammar TableSql;
 
 options { caseInsensitive = true; }
 
