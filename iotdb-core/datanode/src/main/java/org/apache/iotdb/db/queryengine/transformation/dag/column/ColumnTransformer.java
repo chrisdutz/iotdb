@@ -25,7 +25,7 @@ import org.apache.tsfile.block.column.Column;
 import org.apache.tsfile.read.common.type.Type;
 import org.apache.tsfile.read.common.type.TypeEnum;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isNumericType;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isNumericType;
 
 public abstract class ColumnTransformer {
 

@@ -111,7 +111,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertRowNod
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertRowsNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertRowsOfOneDeviceNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertTabletNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.CreateTableDeviceNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.CreateTableDeviceNode;
 
 import org.apache.tsfile.utils.ReadWriteIOUtils;
 
@@ -492,29 +492,28 @@ public enum PlanNodeType {
       case 904:
         return TableDeviceFetchNode.deserialize(buffer);
       case 1000:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode
-            .deserialize(buffer);
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode.deserialize(
+            buffer);
       case 1001:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode.deserialize(
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode.deserialize(
             buffer);
       case 1002:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode.deserialize(
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode.deserialize(
             buffer);
       case 1003:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode.deserialize(
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode.deserialize(
             buffer);
       case 1004:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode.deserialize(
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode.deserialize(
             buffer);
       case 1005:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode.deserialize(
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode.deserialize(
             buffer);
       case 1006:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode.deserialize(
-            buffer);
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode.deserialize(buffer);
       case 1007:
-        return org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode
-            .deserialize(buffer);
+        return org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode.deserialize(
+            buffer);
       case 1008:
         return TopKNode.deserialize(buffer);
       default:

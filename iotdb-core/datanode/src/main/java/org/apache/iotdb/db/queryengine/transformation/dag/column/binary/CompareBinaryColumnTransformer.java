@@ -28,7 +28,7 @@ import org.apache.tsfile.read.common.block.column.RunLengthEncodedColumn;
 import org.apache.tsfile.read.common.type.Type;
 import org.apache.tsfile.read.common.type.TypeEnum;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isCharType;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isCharType;
 
 public abstract class CompareBinaryColumnTransformer extends BinaryColumnTransformer {
 

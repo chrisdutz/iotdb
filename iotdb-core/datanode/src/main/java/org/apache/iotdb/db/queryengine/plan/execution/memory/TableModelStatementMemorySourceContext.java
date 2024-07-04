@@ -20,7 +20,7 @@
 package org.apache.iotdb.db.queryengine.plan.execution.memory;
 
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.Analysis;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.Analysis;
 
 public class TableModelStatementMemorySourceContext {
   private final MPPQueryContext queryContext;

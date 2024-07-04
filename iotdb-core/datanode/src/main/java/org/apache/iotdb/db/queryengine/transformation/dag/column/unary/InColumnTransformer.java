@@ -20,11 +20,11 @@
 package org.apache.iotdb.db.queryengine.transformation.dag.column.unary;
 
 import org.apache.iotdb.db.exception.sql.SemanticException;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.BooleanLiteral;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DoubleLiteral;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Literal;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LongLiteral;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.StringLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.BooleanLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DoubleLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Literal;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LongLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.StringLiteral;
 import org.apache.iotdb.db.queryengine.transformation.dag.column.ColumnTransformer;
 
 import org.apache.tsfile.block.column.Column;

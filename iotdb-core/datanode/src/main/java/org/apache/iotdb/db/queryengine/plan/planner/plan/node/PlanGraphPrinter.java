@@ -66,7 +66,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationDe
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.CrossSeriesAggregationDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.DeviceViewIntoPathDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.IntoPathDescriptor;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
 
 import org.apache.commons.lang3.Validate;
 import org.apache.tsfile.utils.Pair;
@@ -623,7 +623,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitFilter(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Filter-%s", node.getPlanNodeId().getId()));
@@ -633,7 +633,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitProject(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Project-%s", node.getPlanNodeId().getId()));
@@ -644,7 +644,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitOutput(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Output-%s", node.getPlanNodeId().getId()));
@@ -654,7 +654,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitLimit(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Limit-%s", node.getPlanNodeId().getId()));
@@ -664,7 +664,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitOffset(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Offset-%s", node.getPlanNodeId().getId()));
@@ -674,8 +674,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitSort(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode node,
-      GraphContext context) {
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode node, GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("Sort-%s", node.getPlanNodeId().getId()));
     boxValue.add(String.format("OrderingScheme: %s", node.getOrderingScheme()));
@@ -684,7 +683,7 @@ public class PlanGraphPrinter extends PlanVisitor<List<String>, PlanGraphPrinter
 
   @Override
   public List<String> visitMergeSort(
-      org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode node,
+      org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode node,
       GraphContext context) {
     List<String> boxValue = new ArrayList<>();
     boxValue.add(String.format("MergeSort-%s", node.getPlanNodeId().getId()));

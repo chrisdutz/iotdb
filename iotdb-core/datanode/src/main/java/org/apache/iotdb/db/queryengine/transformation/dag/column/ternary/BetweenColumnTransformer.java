@@ -26,7 +26,7 @@ import org.apache.tsfile.block.column.Column;
 import org.apache.tsfile.block.column.ColumnBuilder;
 import org.apache.tsfile.read.common.type.Type;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isCharType;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isCharType;
 
 public class BetweenColumnTransformer extends CompareTernaryColumnTransformer {
   private final boolean isNotBetween;

@@ -27,9 +27,9 @@ import org.apache.iotdb.db.queryengine.execution.operator.source.AbstractSeriesS
 import org.apache.iotdb.db.queryengine.execution.operator.source.AlignedSeriesScanUtil;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.SeriesScanOptions;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnSchema;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.DeviceEntry;
 import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
 import org.apache.iotdb.db.storageengine.dataregion.read.IQueryDataSource;
 import org.apache.iotdb.db.storageengine.dataregion.read.QueryDataSource;
 
@@ -53,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.apache.iotdb.db.queryengine.execution.operator.source.AlignedSeriesScanOperator.appendDataIntoBuilder;
-import static org.apache.iotdb.db.queryengine.plan.relational.type.InternalTypeManager.getTSDataType;
+import static org.apache.iotdb.db.queryengine.plan.table.type.InternalTypeManager.getTSDataType;
 
 public class TableScanOperator extends AbstractSeriesScanOperator {
 

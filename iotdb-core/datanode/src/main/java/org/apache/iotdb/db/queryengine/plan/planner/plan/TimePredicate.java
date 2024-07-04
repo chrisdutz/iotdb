@@ -41,8 +41,7 @@ public interface TimePredicate {
       return new TreeModelTimePredicate(Expression.deserialize(byteBuffer));
     } else {
       return new TableModelTimePredicate(
-          org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression.deserialize(
-              byteBuffer));
+          org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression.deserialize(byteBuffer));
     }
   }
 }

@@ -59,22 +59,22 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNo
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.sink.IdentitySinkNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.InputLocation;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.SeriesScanOptions;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.predicate.ConvertPredicateToTimeFilterVisitor;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnSchema;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.OrderingScheme;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.StreamSortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TopKNode;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.predicate.ConvertPredicateToTimeFilterVisitor;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.planner.OrderingScheme;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.StreamSortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TopKNode;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
 import org.apache.iotdb.db.queryengine.transformation.dag.column.ColumnTransformer;
 import org.apache.iotdb.db.queryengine.transformation.dag.column.leaf.LeafColumnTransformer;
 
@@ -105,7 +105,7 @@ import static org.apache.iotdb.db.queryengine.execution.operator.process.join.me
 import static org.apache.iotdb.db.queryengine.execution.operator.source.relational.TableScanOperator.constructAlignedPath;
 import static org.apache.iotdb.db.queryengine.plan.analyze.PredicateUtils.convertPredicateToFilter;
 import static org.apache.iotdb.db.queryengine.plan.expression.leaf.TimestampOperand.TIMESTAMP_EXPRESSION_STRING;
-import static org.apache.iotdb.db.queryengine.plan.relational.type.InternalTypeManager.getTSDataType;
+import static org.apache.iotdb.db.queryengine.plan.table.type.InternalTypeManager.getTSDataType;
 
 /** This Visitor is responsible for transferring Table PlanNode Tree to Table Operator Tree. */
 public class TableOperatorGenerator extends PlanVisitor<Operator, LocalExecutionPlanContext> {

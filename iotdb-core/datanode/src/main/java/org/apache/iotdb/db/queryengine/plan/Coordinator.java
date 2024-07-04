@@ -46,23 +46,23 @@ import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigExecution;
 import org.apache.iotdb.db.queryengine.plan.execution.config.TableConfigTaskVisitor;
 import org.apache.iotdb.db.queryengine.plan.execution.config.TreeConfigTaskVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.TreeModelPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.RelationalModelPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DescribeTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DropDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DropTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowCluster;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowConfigNodes;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowDataNodes;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowRegions;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowTables;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Use;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.parser.SqlParser;
 import org.apache.iotdb.db.queryengine.plan.statement.IConfigStatement;
 import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.planner.TableModelPlanner;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DescribeTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DropDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DropTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowCluster;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowConfigNodes;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowDataNodes;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowRegions;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowTables;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Use;
+import org.apache.iotdb.db.queryengine.plan.table.sql.parser.SqlParser;
 import org.apache.iotdb.db.utils.SetThreadName;
 
 import org.slf4j.Logger;
@@ -237,7 +237,7 @@ public class Coordinator {
   }
 
   public ExecutionResult executeForTableModel(
-      org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Statement statement,
+      org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement statement,
       SqlParser sqlParser,
       IClientSession clientSession,
       long queryId,
@@ -261,7 +261,7 @@ public class Coordinator {
   }
 
   private IQueryExecution createQueryExecutionForTableModel(
-      org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Statement statement,
+      org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement statement,
       SqlParser sqlParser,
       IClientSession clientSession,
       MPPQueryContext queryContext,
@@ -288,8 +288,8 @@ public class Coordinator {
           executor,
           statement.accept(new TableConfigTaskVisitor(clientSession, metadata), queryContext));
     }
-    RelationalModelPlanner relationalModelPlanner =
-        new RelationalModelPlanner(
+    TableModelPlanner tableModelPlanner =
+        new TableModelPlanner(
             statement,
             sqlParser,
             metadata,
@@ -298,7 +298,7 @@ public class Coordinator {
             scheduledExecutor,
             SYNC_INTERNAL_SERVICE_CLIENT_MANAGER,
             ASYNC_INTERNAL_SERVICE_CLIENT_MANAGER);
-    return new QueryExecution(relationalModelPlanner, queryContext, executor);
+    return new QueryExecution(tableModelPlanner, queryContext, executor);
   }
 
   public IQueryExecution getQueryExecution(Long queryId) {

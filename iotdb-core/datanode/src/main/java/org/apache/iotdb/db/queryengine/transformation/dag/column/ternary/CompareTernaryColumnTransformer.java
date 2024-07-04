@@ -23,7 +23,7 @@ import org.apache.iotdb.db.queryengine.transformation.dag.column.ColumnTransform
 
 import org.apache.tsfile.read.common.type.Type;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isCharType;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isCharType;
 
 public abstract class CompareTernaryColumnTransformer extends TernaryColumnTransformer {
   protected CompareTernaryColumnTransformer(

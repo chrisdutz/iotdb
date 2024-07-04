@@ -19,10 +19,10 @@
 
 package org.apache.iotdb.db.queryengine.execution.operator.process.join.merge;
 
-import org.apache.iotdb.db.queryengine.plan.relational.planner.SortOrder;
 import org.apache.iotdb.db.queryengine.plan.statement.component.NullOrdering;
 import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
 import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.table.planner.SortOrder;
 import org.apache.iotdb.db.utils.datastructure.SortKey;
 
 import org.apache.commons.collections4.comparators.ComparatorChain;

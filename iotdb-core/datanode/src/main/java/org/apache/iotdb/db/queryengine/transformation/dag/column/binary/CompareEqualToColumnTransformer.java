@@ -25,7 +25,7 @@ import org.apache.tsfile.read.common.type.Type;
 
 import java.util.Arrays;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isTwoTypeComparable;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isTwoTypeComparable;
 
 public class CompareEqualToColumnTransformer extends CompareBinaryColumnTransformer {
   public CompareEqualToColumnTransformer(

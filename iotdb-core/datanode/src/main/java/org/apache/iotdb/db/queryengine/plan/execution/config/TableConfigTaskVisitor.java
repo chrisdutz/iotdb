@@ -36,29 +36,29 @@ import org.apache.iotdb.db.queryengine.plan.execution.config.metadata.relational
 import org.apache.iotdb.db.queryengine.plan.execution.config.metadata.relational.ShowRegionsTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.metadata.relational.ShowTablesTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.metadata.relational.UseDBTask;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.fetcher.TableHeaderSchemaValidator;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.AstVisitor;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ColumnDefinition;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CurrentDatabase;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DataType;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DescribeTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DropDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.DropTable;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LongLiteral;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Node;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Property;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowCluster;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowConfigNodes;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowDB;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowDataNodes;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowRegions;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowTables;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Use;
-import org.apache.iotdb.db.queryengine.plan.relational.type.TypeNotFoundException;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.fetcher.TableHeaderSchemaValidator;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.AstVisitor;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ColumnDefinition;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CurrentDatabase;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DataType;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DescribeTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DropDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DropTable;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LongLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Node;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Property;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowCluster;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowConfigNodes;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowDB;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowDataNodes;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowRegions;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowTables;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Use;
+import org.apache.iotdb.db.queryengine.plan.table.type.TypeNotFoundException;
 
 import org.apache.tsfile.enums.TSDataType;
 
@@ -69,8 +69,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.apache.iotdb.db.queryengine.common.header.ColumnHeaderConstant.COLUMN_TTL;
-import static org.apache.iotdb.db.queryengine.plan.relational.type.InternalTypeManager.getTSDataType;
-import static org.apache.iotdb.db.queryengine.plan.relational.type.TypeSignatureTranslator.toTypeSignature;
+import static org.apache.iotdb.db.queryengine.plan.table.type.InternalTypeManager.getTSDataType;
+import static org.apache.iotdb.db.queryengine.plan.table.type.TypeSignatureTranslator.toTypeSignature;
 
 public class TableConfigTaskVisitor extends AstVisitor<IConfigTask, MPPQueryContext> {
 

@@ -27,10 +27,10 @@ import org.apache.iotdb.db.queryengine.plan.planner.LocalExecutionPlanner;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.LogicalQueryPlan;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanGraphPrinter;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.distribute.ExchangeNodeGenerator;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.AstVisitor;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Explain;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Node;
+import org.apache.iotdb.db.queryengine.plan.table.planner.distribute.ExchangeNodeGenerator;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.AstVisitor;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Explain;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Node;
 
 import org.apache.tsfile.enums.TSDataType;
 import org.apache.tsfile.read.common.block.TsBlock;
@@ -62,7 +62,7 @@ public class TableModelStatementMemorySourceVisitor
                 new ColumnHeader(IoTDBConstant.COLUMN_DISTRIBUTION_PLAN, TSDataType.TEXT)),
             true);
     LogicalQueryPlan logicalPlan =
-        new org.apache.iotdb.db.queryengine.plan.relational.planner.LogicalPlanner(
+        new org.apache.iotdb.db.queryengine.plan.table.planner.LogicalPlanner(
                 context.getQueryContext(),
                 LocalExecutionPlanner.getInstance().metadata,
                 context.getQueryContext().getSession(),

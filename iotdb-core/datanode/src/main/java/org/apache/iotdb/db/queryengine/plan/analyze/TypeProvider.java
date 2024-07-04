@@ -19,7 +19,7 @@
 
 package org.apache.iotdb.db.queryengine.plan.analyze;
 
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.tsfile.enums.TSDataType;

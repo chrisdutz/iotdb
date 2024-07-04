@@ -28,7 +28,7 @@ import org.apache.tsfile.read.common.type.Type;
 
 import java.util.regex.Pattern;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isCharType;
+import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isCharType;
 
 public class RegularColumnTransformer extends UnaryColumnTransformer {
   private final Pattern pattern;
