@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.analyzer;
+package org.apache.iotdb.db.queryengine.plan.table.analyzer;
 
 import org.apache.iotdb.commons.conf.IoTDBConstant;
 import org.apache.iotdb.db.protocol.session.IClientSession;
@@ -30,23 +30,23 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.LogicalQueryPlan;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.sink.IdentitySinkNode;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.LogicalPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.distribute.TableDistributionPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.PruneUnUsedColumns;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.PushPredicateIntoTableScan;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.RemoveRedundantIdentityProjections;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.SimplifyExpressions;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.TablePlanOptimizer;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.planner.LogicalPlanner;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.distribute.TableDistributionPlanner;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.PruneUnUsedColumns;
+import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.PushPredicateIntoTableScan;
+import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.RemoveRedundantIdentityProjections;
+import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.SimplifyExpressions;
+import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.TablePlanOptimizer;
 
 import org.junit.Test;
 
@@ -55,9 +55,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.AnalyzerTest.analyzeSQL;
 import static org.apache.iotdb.db.queryengine.plan.statement.component.Ordering.ASC;
 import static org.apache.iotdb.db.queryengine.plan.statement.component.Ordering.DESC;
+import static org.apache.iotdb.db.queryengine.plan.table.analyzer.AnalyzerTest.analyzeSQL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

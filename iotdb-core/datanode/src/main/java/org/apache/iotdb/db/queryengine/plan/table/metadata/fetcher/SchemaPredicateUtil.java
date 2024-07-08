@@ -17,15 +17,15 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.metadata.fetcher;
+package org.apache.iotdb.db.queryengine.plan.table.metadata.fetcher;
 
 import org.apache.iotdb.commons.schema.table.TsTable;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.predicate.schema.CheckSchemaPredicateVisitor;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ComparisonExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Literal;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LogicalExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.SymbolReference;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.predicate.schema.CheckSchemaPredicateVisitor;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ComparisonExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Literal;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LogicalExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.SymbolReference;
 
 import org.apache.tsfile.utils.Pair;
 
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.apache.iotdb.db.queryengine.plan.relational.planner.ir.IrUtils.extractPredicates;
+import static org.apache.iotdb.db.queryengine.plan.table.planner.ir.IrUtils.extractPredicates;
 
 public class SchemaPredicateUtil {
 

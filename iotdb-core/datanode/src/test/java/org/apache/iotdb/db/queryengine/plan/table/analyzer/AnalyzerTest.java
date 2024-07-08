@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.analyzer;
+package org.apache.iotdb.db.queryengine.plan.table.analyzer;
 
 import org.apache.iotdb.commons.conf.IoTDBConstant;
 import org.apache.iotdb.db.protocol.session.IClientSession;
@@ -29,29 +29,29 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.DistributedQueryPlan;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.LogicalQueryPlan;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
-import org.apache.iotdb.db.queryengine.plan.relational.function.OperatorType;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnHandle;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnSchema;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.OperatorNotFoundException;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.QualifiedObjectName;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.TableHandle;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.TableSchema;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.LogicalPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.distribute.TableDistributionPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.CollectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.security.AccessControl;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LogicalExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Statement;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.parser.SqlParser;
+import org.apache.iotdb.db.queryengine.plan.table.function.OperatorType;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnHandle;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.OperatorNotFoundException;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.QualifiedObjectName;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.TableHandle;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.TableSchema;
+import org.apache.iotdb.db.queryengine.plan.table.planner.LogicalPlanner;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.distribute.TableDistributionPlanner;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.CollectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.security.AccessControl;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LogicalExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.table.sql.parser.SqlParser;
 
 import org.junit.Ignore;
 import org.junit.Test;

@@ -12,24 +12,24 @@
  * limitations under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.planner.distribute;
+package org.apache.iotdb.db.queryengine.plan.table.planner.distribute;
 
 import org.apache.iotdb.db.queryengine.plan.analyze.TypeProvider;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.SimplePlanVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.sink.IdentitySinkNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.CollectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.CollectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
 
 import org.apache.tsfile.read.common.type.BooleanType;
 

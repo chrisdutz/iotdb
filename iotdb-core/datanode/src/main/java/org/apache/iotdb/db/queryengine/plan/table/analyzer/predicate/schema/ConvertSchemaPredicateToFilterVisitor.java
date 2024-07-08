@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.analyzer.predicate.schema;
+package org.apache.iotdb.db.queryengine.plan.table.analyzer.predicate.schema;
 
 import org.apache.iotdb.commons.schema.filter.SchemaFilter;
 import org.apache.iotdb.commons.schema.filter.impl.DeviceAttributeFilter;
@@ -26,22 +26,22 @@ import org.apache.iotdb.commons.schema.filter.impl.OrFilter;
 import org.apache.iotdb.commons.schema.table.TsTable;
 import org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory;
 import org.apache.iotdb.commons.schema.table.column.TsTableColumnSchema;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.predicate.PredicateVisitor;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.BetweenPredicate;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ComparisonExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.IfExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.InPredicate;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.IsNotNullPredicate;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.IsNullPredicate;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LikePredicate;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Literal;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.LogicalExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.NotExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.NullIfExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.SearchedCaseExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.SimpleCaseExpression;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.StringLiteral;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.SymbolReference;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.predicate.PredicateVisitor;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.BetweenPredicate;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ComparisonExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.IfExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.InPredicate;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.IsNotNullPredicate;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.IsNullPredicate;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LikePredicate;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Literal;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.LogicalExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.NotExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.NullIfExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.SearchedCaseExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.SimpleCaseExpression;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.StringLiteral;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.SymbolReference;
 
 import java.util.HashMap;
 import java.util.List;

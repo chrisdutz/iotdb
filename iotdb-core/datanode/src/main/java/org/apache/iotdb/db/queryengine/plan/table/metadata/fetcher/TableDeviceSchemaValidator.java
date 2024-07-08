@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.metadata.fetcher;
+package org.apache.iotdb.db.queryengine.plan.table.metadata.fetcher;
 
 import org.apache.iotdb.commons.exception.IoTDBException;
 import org.apache.iotdb.db.conf.IoTDBConfig;
@@ -29,11 +29,11 @@ import org.apache.iotdb.db.queryengine.plan.Coordinator;
 import org.apache.iotdb.db.queryengine.plan.analyze.QueryType;
 import org.apache.iotdb.db.queryengine.plan.execution.ExecutionResult;
 import org.apache.iotdb.db.queryengine.plan.planner.LocalExecutionPlanner;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.ITableDeviceSchemaValidation;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.fetcher.cache.TableDeviceId;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateDevice;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.FetchDevice;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.parser.SqlParser;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.ITableDeviceSchemaValidation;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.fetcher.cache.TableDeviceId;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateDevice;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.FetchDevice;
+import org.apache.iotdb.db.queryengine.plan.table.sql.parser.SqlParser;
 import org.apache.iotdb.rpc.TSStatusCode;
 
 import org.slf4j.Logger;

@@ -12,13 +12,13 @@
  * limitations under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations;
+package org.apache.iotdb.db.queryengine.plan.table.planner.optimizations;
 
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.common.SessionInfo;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.Analysis;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.Analysis;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
 
 public interface TablePlanOptimizer {
   PlanNode optimize(

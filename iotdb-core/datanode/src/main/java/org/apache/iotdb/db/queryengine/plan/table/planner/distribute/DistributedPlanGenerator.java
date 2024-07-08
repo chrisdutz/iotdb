@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.iotdb.db.queryengine.plan.relational.planner.distribute;
+package org.apache.iotdb.db.queryengine.plan.table.planner.distribute;
 
 import org.apache.iotdb.common.rpc.thrift.TRegionReplicaSet;
 import org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory;
@@ -28,22 +28,22 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.Sche
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.TableDeviceSourceNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SourceNode;
-import org.apache.iotdb.db.queryengine.plan.relational.analyzer.Analysis;
-import org.apache.iotdb.db.queryengine.plan.relational.metadata.DeviceEntry;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.OrderingScheme;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.SortOrder;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.Symbol;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.CollectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.FilterNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.LimitNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.MergeSortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OffsetNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.ProjectNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.SortNode;
-import org.apache.iotdb.db.queryengine.plan.relational.planner.node.TableScanNode;
-import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
 import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.table.analyzer.Analysis;
+import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
+import org.apache.iotdb.db.queryengine.plan.table.planner.OrderingScheme;
+import org.apache.iotdb.db.queryengine.plan.table.planner.SortOrder;
+import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.CollectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.FilterNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.LimitNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.MergeSortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OffsetNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode;
+import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
+import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.PushPredicateIntoTableScan.containsDiffFunction;
+import static org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.PushPredicateIntoTableScan.containsDiffFunction;
 import static org.apache.iotdb.db.utils.constant.TestConstant.TIMESTAMP_STR;
 
 /** This class is used to generate distributed plan for table model. */
