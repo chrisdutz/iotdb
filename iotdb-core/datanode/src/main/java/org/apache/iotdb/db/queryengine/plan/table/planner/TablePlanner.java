@@ -13,6 +13,7 @@
  */
 package org.apache.iotdb.db.queryengine.plan.table.planner;
 
+import org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory;
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.common.QueryId;
 import org.apache.iotdb.db.queryengine.common.SessionInfo;
@@ -42,6 +43,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,14 +99,23 @@ public class TablePlanner extends AstVisitor<TablePlan, Void> {
     ImmutableList.Builder<Symbol> outputSymbolsBuilder = ImmutableList.builder();
     ImmutableMap.Builder<Symbol, ColumnSchema> symbolToColumnSchema = ImmutableMap.builder();
     Collection<Field> fields = scope.getRelationType().getAllFields();
-
+    // on the basis of that the order of fields is same with the column category order of segments
+    // in DeviceEntry
+    Map<Symbol, Integer> idAndAttributeIndexMap = new HashMap<>();
+    int idIndex = 0, attributeIndex = 0;
     for (Field field : fields) {
       Symbol symbol = symbolAllocator.newSymbol(field);
       outputSymbolsBuilder.add(symbol);
+      TsTableColumnCategory category = field.getColumnCategory();
       symbolToColumnSchema.put(
           symbol,
           new ColumnSchema(
-              field.getName().get(), field.getType(), field.isHidden(), field.getColumnCategory()));
+              field.getName().orElse(null), field.getType(), field.isHidden(), category));
+      if (category == TsTableColumnCategory.ID) {
+        idAndAttributeIndexMap.put(symbol, idIndex++);
+      } else if (category == TsTableColumnCategory.ATTRIBUTE) {
+        idAndAttributeIndexMap.put(symbol, attributeIndex++);
+      }
     }
 
     List<Symbol> outputSymbols = outputSymbolsBuilder.build();
@@ -112,13 +123,16 @@ public class TablePlanner extends AstVisitor<TablePlan, Void> {
     if (!qualifiedName.getPrefix().isPresent()) {
       throw new IllegalStateException("Table " + table.getName() + " has no prefix!");
     }
+
     TableScanNode tableScanNode =
         new TableScanNode(
             idAllocator.genPlanNodeId(),
             new QualifiedObjectName(
-                qualifiedName.getPrefix().get().toString(), qualifiedName.getSuffix()),
+                qualifiedName.getPrefix().map(QualifiedName::toString).orElse(null),
+                qualifiedName.getSuffix()),
             outputSymbols,
-            symbolToColumnSchema.build());
+            symbolToColumnSchema.build(),
+            idAndAttributeIndexMap);
 
     return new TablePlan(tableScanNode, scope, outputSymbols);
 

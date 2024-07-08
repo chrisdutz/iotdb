@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.table.planner;
+package org.apache.iotdb.db.queryengine.plan.relational.planner;
 
 import org.apache.iotdb.commons.partition.SchemaPartition;
 import org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory;
@@ -28,24 +28,24 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.SchemaQueryMergeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.TableDeviceFetchNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.TableDeviceQueryNode;
-import org.apache.iotdb.db.queryengine.plan.table.analyzer.Analysis;
-import org.apache.iotdb.db.queryengine.plan.table.analyzer.Field;
-import org.apache.iotdb.db.queryengine.plan.table.analyzer.RelationType;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.table.planner.node.CreateTableDeviceNode;
-import org.apache.iotdb.db.queryengine.plan.table.planner.node.OutputNode;
-import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.PruneUnUsedColumns;
-import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.PushPredicateIntoTableScan;
-import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.RemoveRedundantIdentityProjections;
-import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.SimplifyExpressions;
-import org.apache.iotdb.db.queryengine.plan.table.planner.optimizations.TablePlanOptimizer;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateDevice;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Explain;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.FetchDevice;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Query;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowDevice;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Table;
+import org.apache.iotdb.db.queryengine.plan.relational.analyzer.Analysis;
+import org.apache.iotdb.db.queryengine.plan.relational.analyzer.Field;
+import org.apache.iotdb.db.queryengine.plan.relational.analyzer.RelationType;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.node.CreateTableDeviceNode;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.node.OutputNode;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.PruneUnUsedColumns;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.PushPredicateIntoTableScan;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.RemoveRedundantIdentityProjections;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.SimplifyExpressions;
+import org.apache.iotdb.db.queryengine.plan.relational.planner.optimizations.TablePlanOptimizer;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.CreateDevice;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Explain;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.FetchDevice;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Query;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.ShowDevice;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Table;
 import org.apache.iotdb.db.schemaengine.table.DataNodeTableCache;
 
 import com.google.common.collect.ImmutableList;
@@ -59,7 +59,7 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 import static org.apache.iotdb.db.queryengine.plan.expression.leaf.TimestampOperand.TIMESTAMP_EXPRESSION_STRING;
-import static org.apache.iotdb.db.queryengine.plan.table.type.InternalTypeManager.getTSDataType;
+import static org.apache.iotdb.db.queryengine.plan.relational.type.InternalTypeManager.getTSDataType;
 
 public class LogicalPlanner {
   private static final Logger LOG = LoggerFactory.getLogger(LogicalPlanner.class);
@@ -88,6 +88,19 @@ public class LogicalPlanner {
             new RemoveRedundantIdentityProjections());
   }
 
+  public LogicalPlanner(
+      MPPQueryContext context,
+      Metadata metadata,
+      SessionInfo sessionInfo,
+      List<TablePlanOptimizer> tablePlanOptimizers,
+      WarningCollector warningCollector) {
+    this.context = context;
+    this.metadata = metadata;
+    this.sessionInfo = requireNonNull(sessionInfo, "session is null");
+    this.warningCollector = requireNonNull(warningCollector, "warningCollector is null");
+    this.tablePlanOptimizers = tablePlanOptimizers;
+  }
+
   public LogicalQueryPlan plan(Analysis analysis) {
     PlanNode planNode = planStatement(analysis, analysis.getStatement());
 
@@ -110,7 +123,7 @@ public class LogicalPlanner {
     return createOutputPlan(planStatementWithoutOutput(analysis, statement), analysis);
   }
 
-  private TablePlan planStatementWithoutOutput(Analysis analysis, Statement statement) {
+  private RelationPlan planStatementWithoutOutput(Analysis analysis, Statement statement) {
     if (statement instanceof Query) {
       return createRelationPlan(analysis, (Query) statement);
     }
@@ -121,7 +134,7 @@ public class LogicalPlanner {
         "Unsupported statement type: " + statement.getClass().getSimpleName());
   }
 
-  private PlanNode createOutputPlan(TablePlan plan, Analysis analysis) {
+  private PlanNode createOutputPlan(RelationPlan plan, Analysis analysis) {
     ImmutableList.Builder<Symbol> outputs = ImmutableList.builder();
     ImmutableList.Builder<String> names = ImmutableList.builder();
     List<ColumnHeader> columnHeaders = new ArrayList<>();
@@ -154,22 +167,16 @@ public class LogicalPlanner {
     return outputNode;
   }
 
-  private TablePlan createRelationPlan(Analysis analysis, Query query) {
+  private RelationPlan createRelationPlan(Analysis analysis, Query query) {
     return getRelationPlanner(analysis).process(query, null);
   }
 
-  private TablePlan createRelationPlan(Analysis analysis, Table table) {
+  private RelationPlan createRelationPlan(Analysis analysis, Table table) {
     return getRelationPlanner(analysis).process(table, null);
   }
 
-  private TablePlanner getRelationPlanner(Analysis analysis) {
-    return new TablePlanner(analysis, symbolAllocator, context, sessionInfo, ImmutableMap.of());
-  }
-
-  private enum Stage {
-    CREATED,
-    OPTIMIZED,
-    OPTIMIZED_AND_VALIDATED
+  private RelationPlanner getRelationPlanner(Analysis analysis) {
+    return new RelationPlanner(analysis, symbolAllocator, context, sessionInfo, ImmutableMap.of());
   }
 
   private PlanNode planCreateDevice(CreateDevice statement, Analysis analysis) {
@@ -269,5 +276,11 @@ public class LogicalPlanner {
       }
     }
     return columnHeaderList;
+  }
+
+  private enum Stage {
+    CREATED,
+    OPTIMIZED,
+    OPTIMIZED_AND_VALIDATED
   }
 }

@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.table.analyzer;
+package org.apache.iotdb.db.queryengine.plan.relational.analyzer;
 
 import org.apache.iotdb.commons.partition.DataPartition;
 import org.apache.iotdb.commons.partition.DataPartitionQueryParam;
@@ -24,21 +24,21 @@ import org.apache.iotdb.commons.udf.builtin.BuiltinAggregationFunction;
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.common.SessionInfo;
 import org.apache.iotdb.db.queryengine.plan.analyze.IPartitionFetcher;
-import org.apache.iotdb.db.queryengine.plan.table.function.OperatorType;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnMetadata;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.ITableDeviceSchemaValidation;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.OperatorNotFoundException;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.QualifiedObjectName;
-import org.apache.iotdb.db.queryengine.plan.table.metadata.TableSchema;
-import org.apache.iotdb.db.queryengine.plan.table.security.AccessControl;
-import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
-import org.apache.iotdb.db.queryengine.plan.table.type.InternalTypeManager;
-import org.apache.iotdb.db.queryengine.plan.table.type.TypeManager;
-import org.apache.iotdb.db.queryengine.plan.table.type.TypeNotFoundException;
-import org.apache.iotdb.db.queryengine.plan.table.type.TypeSignature;
+import org.apache.iotdb.db.queryengine.plan.relational.function.OperatorType;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnMetadata;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.ColumnSchema;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.DeviceEntry;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.ITableDeviceSchemaValidation;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.Metadata;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.OperatorNotFoundException;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.QualifiedObjectName;
+import org.apache.iotdb.db.queryengine.plan.relational.metadata.TableSchema;
+import org.apache.iotdb.db.queryengine.plan.relational.security.AccessControl;
+import org.apache.iotdb.db.queryengine.plan.relational.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.relational.type.InternalTypeManager;
+import org.apache.iotdb.db.queryengine.plan.relational.type.TypeManager;
+import org.apache.iotdb.db.queryengine.plan.relational.type.TypeNotFoundException;
+import org.apache.iotdb.db.queryengine.plan.relational.type.TypeSignature;
 import org.apache.iotdb.mpp.rpc.thrift.TRegionRouteReq;
 
 import org.apache.tsfile.file.metadata.IDeviceID;
@@ -47,16 +47,27 @@ import org.apache.tsfile.read.common.type.StringType;
 import org.apache.tsfile.read.common.type.Type;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.getFunctionType;
-import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isOneNumericType;
-import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isTwoNumericType;
-import static org.apache.iotdb.db.queryengine.plan.table.metadata.TableMetadataImpl.isTwoTypeComparable;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_1;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_1_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_2;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_2_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_3;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_3_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_4;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_4_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_5;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_5_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_6;
+import static org.apache.iotdb.db.queryengine.plan.relational.analyzer.MockTableModelDataPartition.DEVICE_6_ATTRIBUTES;
+import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.getFunctionType;
+import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isOneNumericType;
+import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isTwoNumericType;
+import static org.apache.iotdb.db.queryengine.plan.relational.metadata.TableMetadataImpl.isTwoTypeComparable;
 import static org.apache.tsfile.read.common.type.BooleanType.BOOLEAN;
 import static org.apache.tsfile.read.common.type.DoubleType.DOUBLE;
 import static org.apache.tsfile.read.common.type.LongType.INT64;
@@ -194,15 +205,19 @@ public class TestMatadata implements Metadata {
   public List<DeviceEntry> indexScan(
       QualifiedObjectName tableName,
       List<Expression> expressionList,
-      List<String> attributeColumns) {
-    return Collections.singletonList(
-        new DeviceEntry(
-            new StringArrayDeviceID("root.testdb", "table1", "t1", "t2", "t3"),
-            Arrays.asList("a1", "a2")));
+      List<String> attributeColumns,
+      MPPQueryContext context) {
+    return Arrays.asList(
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_4.split("\\.")), DEVICE_4_ATTRIBUTES),
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_1.split("\\.")), DEVICE_1_ATTRIBUTES),
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_6.split("\\.")), DEVICE_6_ATTRIBUTES),
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_5.split("\\.")), DEVICE_5_ATTRIBUTES),
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_3.split("\\.")), DEVICE_3_ATTRIBUTES),
+        new DeviceEntry(new StringArrayDeviceID(DEVICE_2.split("\\.")), DEVICE_2_ATTRIBUTES));
   }
 
   @Override
-  public TableSchema validateTableHeaderSchema(
+  public Optional<TableSchema> validateTableHeaderSchema(
       String database, TableSchema tableSchema, MPPQueryContext context) {
     throw new UnsupportedOperationException();
   }
@@ -241,9 +256,11 @@ public class TestMatadata implements Metadata {
     return DATA_PARTITION;
   }
 
-  private static final DataPartition DATA_PARTITION = MockTablePartition.constructDataPartition();
+  private static final DataPartition DATA_PARTITION =
+      MockTableModelDataPartition.constructDataPartition();
+
   private static final SchemaPartition SCHEMA_PARTITION =
-      MockTablePartition.constructSchemaPartition();
+      MockTableModelDataPartition.constructSchemaPartition();
 
   private static IPartitionFetcher getFakePartitionFetcher() {
 
@@ -301,17 +318,17 @@ public class TestMatadata implements Metadata {
       @Override
       public SchemaPartition getOrCreateSchemaPartition(
           String database, List<IDeviceID> deviceIDList, String userName) {
-        return null;
+        return SCHEMA_PARTITION;
       }
 
       @Override
       public SchemaPartition getSchemaPartition(String database, List<IDeviceID> deviceIDList) {
-        return null;
+        return SCHEMA_PARTITION;
       }
 
       @Override
       public SchemaPartition getSchemaPartition(String database) {
-        return null;
+        return SCHEMA_PARTITION;
       }
     };
   }
