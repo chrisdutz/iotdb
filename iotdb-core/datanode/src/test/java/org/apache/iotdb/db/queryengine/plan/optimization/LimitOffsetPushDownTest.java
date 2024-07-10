@@ -29,9 +29,9 @@ import org.apache.iotdb.db.queryengine.plan.analyze.FakeSchemaFetcherImpl;
 import org.apache.iotdb.db.queryengine.plan.expression.Expression;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.GroupByTimeParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy;
-import org.apache.iotdb.db.queryengine.plan.statement.component.GroupByTimeComponent;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.GroupByTimeComponent;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.StatementGenerator;
 
 import org.junit.Assert;

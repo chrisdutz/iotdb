@@ -24,10 +24,10 @@ import org.apache.iotdb.db.exception.query.QueryProcessException;
 import org.apache.iotdb.db.exception.sql.SemanticException;
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.common.schematree.ISchemaTree;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertBaseStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertMultiTabletsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsOfOneDeviceStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertBaseStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertMultiTabletsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsOfOneDeviceStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsStatement;
 
 import org.apache.tsfile.enums.TSDataType;
 import org.apache.tsfile.file.metadata.enums.CompressionType;

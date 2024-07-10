@@ -24,10 +24,10 @@ import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.commons.pipe.pattern.IoTDBPipePattern;
 import org.apache.iotdb.commons.schema.view.viewExpression.leaf.TimeSeriesViewOperand;
 import org.apache.iotdb.db.pipe.receiver.visitor.PipeStatementPatternParseVisitor;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.CreateAlignedTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.CreateTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.ActivateTemplateStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.view.CreateLogicalViewStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.CreateAlignedTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.CreateTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.ActivateTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.view.CreateLogicalViewStatement;
 
 import org.apache.tsfile.enums.TSDataType;
 import org.apache.tsfile.file.metadata.enums.CompressionType;

@@ -37,11 +37,11 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.TwoChildPr
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.join.LeftOuterTimeJoinNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.AlignedSeriesScanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SeriesScanNode;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy;
-import org.apache.iotdb.db.queryengine.plan.statement.component.GroupByTimeComponent;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.GroupByTimeComponent;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 import org.apache.iotdb.db.utils.DateTimeUtils;
 
 import org.apache.tsfile.utils.TimeDuration;

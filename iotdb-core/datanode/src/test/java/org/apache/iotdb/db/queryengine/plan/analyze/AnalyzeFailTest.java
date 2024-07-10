@@ -30,18 +30,18 @@ import org.junit.Test;
 import java.time.ZonedDateTime;
 
 import static org.apache.iotdb.db.queryengine.plan.expression.visitor.CountTimeAggregationAmountVisitor.COUNT_TIME_ONLY_SUPPORT_ONE_WILDCARD;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.DEVICE_ALIGNMENT_INCONSISTENT_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.DEVICE_NUM_MISMATCH_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.DUPLICATE_TARGET_PATH_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.FORBID_PLACEHOLDER_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.ILLEGAL_NODE_NAME_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.PATH_NUM_MISMATCH_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.PLACEHOLDER_MISMATCH_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement.COUNT_TIME_CAN_ONLY_EXIST_ALONE;
-import static org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_GROUP_BY_LEVEL;
-import static org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_GROUP_BY_TAG;
-import static org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_USE_WITH_HAVING;
-import static org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement.RAW_AGGREGATION_HYBRID_QUERY_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.DEVICE_ALIGNMENT_INCONSISTENT_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.DEVICE_NUM_MISMATCH_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.DUPLICATE_TARGET_PATH_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.FORBID_PLACEHOLDER_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.ILLEGAL_NODE_NAME_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.PATH_NUM_MISMATCH_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.PLACEHOLDER_MISMATCH_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement.COUNT_TIME_CAN_ONLY_EXIST_ALONE;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_GROUP_BY_LEVEL;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_GROUP_BY_TAG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement.COUNT_TIME_NOT_SUPPORT_USE_WITH_HAVING;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement.RAW_AGGREGATION_HYBRID_QUERY_ERROR_MSG;
 import static org.junit.Assert.fail;
 
 public class AnalyzeFailTest {

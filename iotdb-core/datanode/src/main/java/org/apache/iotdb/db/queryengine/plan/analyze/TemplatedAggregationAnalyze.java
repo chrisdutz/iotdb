@@ -28,8 +28,8 @@ import org.apache.iotdb.db.queryengine.plan.expression.leaf.ConstantOperand;
 import org.apache.iotdb.db.queryengine.plan.expression.leaf.TimeSeriesOperand;
 import org.apache.iotdb.db.queryengine.plan.expression.leaf.TimestampOperand;
 import org.apache.iotdb.db.queryengine.plan.expression.multi.FunctionExpression;
-import org.apache.iotdb.db.queryengine.plan.statement.component.ResultColumn;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.ResultColumn;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 import org.apache.iotdb.db.schemaengine.template.Template;
 
 import org.apache.tsfile.enums.TSDataType;

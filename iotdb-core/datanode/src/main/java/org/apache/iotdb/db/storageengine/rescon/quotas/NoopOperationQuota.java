@@ -18,7 +18,7 @@
  */
 package org.apache.iotdb.db.storageengine.rescon.quotas;
 
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 
 import java.nio.ByteBuffer;
 import java.util.List;

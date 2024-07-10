@@ -19,7 +19,7 @@
 
 package org.apache.iotdb.db.queryengine.plan.execution.config.metadata;
 
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.UnSetTTLStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.UnSetTTLStatement;
 
 public class UnSetTTLTask extends SetTTLTask {
   public UnSetTTLTask(UnSetTTLStatement unSetTTLStatement) {

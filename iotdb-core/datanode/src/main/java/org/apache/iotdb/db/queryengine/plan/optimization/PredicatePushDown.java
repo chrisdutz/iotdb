@@ -43,9 +43,9 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.join.LeftO
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.AlignedSeriesScanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SeriesScanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SeriesScanSourceNode;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 
 import java.util.ArrayList;
 import java.util.Collections;

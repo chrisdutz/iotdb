@@ -25,9 +25,9 @@ import org.apache.iotdb.db.protocol.rest.utils.InsertRowDataUtils;
 import org.apache.iotdb.db.protocol.rest.v2.model.InsertRecordsRequest;
 import org.apache.iotdb.db.protocol.rest.v2.model.InsertTabletRequest;
 import org.apache.iotdb.db.queryengine.plan.analyze.cache.schema.DataNodeDevicePathCache;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertTabletStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertTabletStatement;
 import org.apache.iotdb.db.utils.TimestampPrecisionUtils;
 import org.apache.iotdb.rpc.IoTDBConnectionException;
 

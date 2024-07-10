@@ -20,12 +20,12 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeType;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SourceNode;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.QualifiedObjectName;
 import org.apache.iotdb.db.queryengine.plan.table.planner.Symbol;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.tsfile.read.filter.basic.Filter;

@@ -35,8 +35,8 @@ import org.apache.iotdb.db.queryengine.common.header.ColumnHeader;
 import org.apache.iotdb.db.queryengine.common.header.ColumnHeaderConstant;
 import org.apache.iotdb.db.queryengine.common.header.DatasetHeader;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.AuthorStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.AuthorStatement;
 import org.apache.iotdb.rpc.TSStatusCode;
 
 import com.google.common.util.concurrent.SettableFuture;

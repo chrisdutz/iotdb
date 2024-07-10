@@ -33,14 +33,14 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.SingleChil
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.SortNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.TopKNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.TransformNode;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.TopKNode.LIMIT_VALUE_USE_TOP_K;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy.LINEAR;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy.LINEAR;
 
 /**
  * Replace `SortNode`+`LimitNode` to `TopKNode` and replace `MergeSortNode`+`LimitNode` to

@@ -46,9 +46,9 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationDe
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationStep;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.CrossSeriesAggregationDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.OrderByParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.component.OrderByKey;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.OrderByKey;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SortItem;
 
 import org.apache.tsfile.enums.TSDataType;
 import org.apache.tsfile.file.metadata.IDeviceID;

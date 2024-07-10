@@ -22,7 +22,7 @@ package org.apache.iotdb.db.utils;
 import org.apache.iotdb.db.exception.query.QueryProcessException;
 import org.apache.iotdb.db.exception.sql.SemanticException;
 import org.apache.iotdb.db.queryengine.plan.execution.IQueryExecution;
-import org.apache.iotdb.db.queryengine.plan.statement.literal.BinaryLiteral;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.literal.BinaryLiteral;
 import org.apache.iotdb.db.utils.constant.SqlConstant;
 import org.apache.iotdb.service.rpc.thrift.TSAggregationQueryReq;
 import org.apache.iotdb.service.rpc.thrift.TSFastLastDataQueryForOneDeviceReq;

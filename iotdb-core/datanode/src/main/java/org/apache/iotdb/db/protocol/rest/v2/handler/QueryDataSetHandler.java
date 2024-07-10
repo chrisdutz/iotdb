@@ -21,12 +21,12 @@ import org.apache.iotdb.commons.exception.IoTDBException;
 import org.apache.iotdb.db.protocol.rest.model.ExecutionStatus;
 import org.apache.iotdb.db.queryengine.common.header.DatasetHeader;
 import org.apache.iotdb.db.queryengine.plan.execution.IQueryExecution;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.GetRegionIdStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.ShowChildPathsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.ShowStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.AuthorStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.GetRegionIdStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.ShowChildPathsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.ShowStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.AuthorStatement;
 import org.apache.iotdb.rpc.TSStatusCode;
 
 import org.apache.tsfile.block.column.Column;

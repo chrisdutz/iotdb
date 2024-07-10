@@ -25,17 +25,17 @@ import org.apache.iotdb.commons.exception.MetadataException;
 import org.apache.iotdb.db.exception.LoadRuntimeOutOfMemoryException;
 import org.apache.iotdb.db.exception.sql.SemanticException;
 import org.apache.iotdb.db.exception.sql.StatementAnalyzeException;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementNode;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementVisitor;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.LoadTsFileStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.internal.InternalCreateMultiTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.internal.InternalCreateTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.CreateAlignedTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.CreateMultiTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.CreateTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.ActivateTemplateStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.BatchActivateTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementNode;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementVisitor;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.LoadTsFileStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.internal.InternalCreateMultiTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.internal.InternalCreateTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.CreateAlignedTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.CreateMultiTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.CreateTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.ActivateTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.BatchActivateTemplateStatement;
 import org.apache.iotdb.rpc.TSStatusCode;
 
 /**

@@ -20,12 +20,12 @@
 package org.apache.iotdb.db.queryengine.plan.planner.statement.sys.pipe;
 
 import org.apache.iotdb.db.queryengine.plan.analyze.QueryType;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.pipe.CreatePipeStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.pipe.DropPipeStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.pipe.ShowPipesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.pipe.StartPipeStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.pipe.StopPipeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.pipe.CreatePipeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.pipe.DropPipeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.pipe.ShowPipesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.pipe.StartPipeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.pipe.StopPipeStatement;
 
 import org.junit.Assert;
 import org.junit.Test;

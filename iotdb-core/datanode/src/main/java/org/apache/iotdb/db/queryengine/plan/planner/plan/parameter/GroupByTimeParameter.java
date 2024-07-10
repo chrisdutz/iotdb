@@ -19,7 +19,7 @@
 
 package org.apache.iotdb.db.queryengine.plan.planner.plan.parameter;
 
-import org.apache.iotdb.db.queryengine.plan.statement.component.GroupByTimeComponent;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.GroupByTimeComponent;
 import org.apache.iotdb.db.utils.TimestampPrecisionUtils;
 
 import org.apache.tsfile.utils.ReadWriteIOUtils;

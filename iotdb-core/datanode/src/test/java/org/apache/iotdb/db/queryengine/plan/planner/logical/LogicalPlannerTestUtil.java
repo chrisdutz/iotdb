@@ -30,7 +30,7 @@ import org.apache.iotdb.db.queryengine.plan.analyze.FakePartitionFetcherImpl;
 import org.apache.iotdb.db.queryengine.plan.analyze.FakeSchemaFetcherImpl;
 import org.apache.iotdb.db.queryengine.plan.planner.LogicalPlanVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.StatementGenerator;
 
 import java.time.ZoneId;

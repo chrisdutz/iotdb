@@ -43,7 +43,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.PipelineDriverFactory;
 import org.apache.iotdb.db.queryengine.plan.planner.distribution.DistributionPlanner;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.FragmentInstance;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.LogicalQueryPlan;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.StatementGenerator;
 import org.apache.iotdb.db.queryengine.transformation.api.LayerReader;
 import org.apache.iotdb.db.queryengine.transformation.dag.transformer.multi.UDFQueryRowWindowTransformer;

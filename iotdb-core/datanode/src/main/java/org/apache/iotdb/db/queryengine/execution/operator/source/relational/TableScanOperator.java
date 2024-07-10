@@ -27,9 +27,9 @@ import org.apache.iotdb.db.queryengine.execution.operator.source.AbstractSeriesS
 import org.apache.iotdb.db.queryengine.execution.operator.source.AlignedSeriesScanUtil;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.SeriesScanOptions;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.ColumnSchema;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 import org.apache.iotdb.db.storageengine.dataregion.read.IQueryDataSource;
 import org.apache.iotdb.db.storageengine.dataregion.read.QueryDataSource;
 

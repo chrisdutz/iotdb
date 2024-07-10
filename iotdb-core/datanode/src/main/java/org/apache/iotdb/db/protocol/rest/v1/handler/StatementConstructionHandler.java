@@ -22,7 +22,7 @@ import org.apache.iotdb.commons.utils.PathUtils;
 import org.apache.iotdb.db.exception.WriteProcessRejectException;
 import org.apache.iotdb.db.protocol.rest.v1.model.InsertTabletRequest;
 import org.apache.iotdb.db.queryengine.plan.analyze.cache.schema.DataNodeDevicePathCache;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertTabletStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertTabletStatement;
 import org.apache.iotdb.db.utils.TimestampPrecisionUtils;
 
 import org.apache.tsfile.enums.TSDataType;

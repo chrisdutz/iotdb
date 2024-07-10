@@ -22,7 +22,7 @@ package org.apache.iotdb.db.queryengine.execution.operator.source;
 import org.apache.iotdb.commons.path.AlignedFullPath;
 import org.apache.iotdb.db.queryengine.execution.fragment.FragmentInstanceContext;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.SeriesScanOptions;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 import org.apache.iotdb.db.storageengine.dataregion.read.reader.common.AlignedDescPriorityMergeReader;
 import org.apache.iotdb.db.storageengine.dataregion.read.reader.common.AlignedPriorityMergeReader;
 import org.apache.iotdb.db.storageengine.dataregion.read.reader.common.DescPriorityMergeReader;

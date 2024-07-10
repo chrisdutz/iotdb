@@ -28,7 +28,6 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.Sche
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.read.TableDeviceSourceNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SourceNode;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
 import org.apache.iotdb.db.queryengine.plan.table.analyzer.Analysis;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.DeviceEntry;
 import org.apache.iotdb.db.queryengine.plan.table.planner.OrderingScheme;
@@ -44,6 +43,7 @@ import org.apache.iotdb.db.queryengine.plan.table.planner.node.ProjectNode;
 import org.apache.iotdb.db.queryengine.plan.table.planner.node.SortNode;
 import org.apache.iotdb.db.queryengine.plan.table.planner.node.TableScanNode;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 
 import java.util.ArrayList;
 import java.util.Collections;

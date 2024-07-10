@@ -30,8 +30,8 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.write.Dea
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.write.DeleteTimeSeriesNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.write.view.AlterLogicalViewNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.metedata.write.view.DeleteLogicalViewNode;
-import org.apache.iotdb.db.queryengine.plan.statement.IConfigStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.IConfigStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

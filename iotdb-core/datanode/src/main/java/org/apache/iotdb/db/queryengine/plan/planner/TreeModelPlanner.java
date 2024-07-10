@@ -37,12 +37,12 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.LogicalQueryPlan;
 import org.apache.iotdb.db.queryengine.plan.scheduler.ClusterScheduler;
 import org.apache.iotdb.db.queryengine.plan.scheduler.IScheduler;
 import org.apache.iotdb.db.queryengine.plan.scheduler.load.LoadTsFileScheduler;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertBaseStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertMultiTabletsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.LoadTsFileStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.pipe.PipeEnrichedStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertBaseStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertMultiTabletsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.LoadTsFileStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.pipe.PipeEnrichedStatement;
 import org.apache.iotdb.rpc.RpcUtils;
 import org.apache.iotdb.rpc.TSStatusCode;
 

@@ -20,9 +20,9 @@
 package org.apache.iotdb.db.utils.datastructure;
 
 import org.apache.iotdb.db.queryengine.execution.operator.process.join.merge.MergeSortComparator;
-import org.apache.iotdb.db.queryengine.plan.statement.component.OrderByKey;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.OrderByKey;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SortItem;
 
 import org.apache.tsfile.common.conf.TSFileConfig;
 import org.apache.tsfile.enums.TSDataType;

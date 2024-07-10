@@ -48,11 +48,11 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.FillDescripto
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.GroupByTimeParameter;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.IntoPathDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.OrderByParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy;
-import org.apache.iotdb.db.queryengine.plan.statement.component.OrderByKey;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
-import org.apache.iotdb.db.queryengine.plan.statement.literal.LongLiteral;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.OrderByKey;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.literal.LongLiteral;
 import org.apache.iotdb.db.utils.columngenerator.parameter.SlidingTimeColumnGeneratorParameter;
 
 import org.apache.tsfile.file.metadata.IDeviceID;

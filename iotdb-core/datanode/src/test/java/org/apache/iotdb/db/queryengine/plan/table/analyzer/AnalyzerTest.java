@@ -68,7 +68,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.apache.iotdb.db.queryengine.execution.warnings.WarningCollector.NOOP;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.Ordering.ASC;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering.ASC;
 import static org.apache.tsfile.read.common.type.BooleanType.BOOLEAN;
 import static org.apache.tsfile.read.common.type.DoubleType.DOUBLE;
 import static org.apache.tsfile.read.common.type.IntType.INT32;

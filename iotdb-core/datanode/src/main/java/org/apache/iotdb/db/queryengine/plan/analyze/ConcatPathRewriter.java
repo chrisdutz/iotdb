@@ -25,10 +25,10 @@ import org.apache.iotdb.commons.path.PathPatternTreeUtils;
 import org.apache.iotdb.db.exception.sql.StatementAnalyzeException;
 import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.plan.expression.Expression;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.component.ResultColumn;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SelectComponent;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.ResultColumn;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SelectComponent;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
 
 import java.util.ArrayList;
 import java.util.List;

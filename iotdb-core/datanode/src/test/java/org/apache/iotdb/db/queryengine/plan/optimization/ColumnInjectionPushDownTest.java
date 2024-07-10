@@ -24,7 +24,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationStep;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.GroupByTimeParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy;
 
 import org.apache.tsfile.utils.TimeDuration;
 import org.junit.Test;

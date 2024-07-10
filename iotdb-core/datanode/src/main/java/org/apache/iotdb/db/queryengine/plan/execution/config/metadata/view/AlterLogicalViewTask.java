@@ -23,7 +23,7 @@ import org.apache.iotdb.db.queryengine.common.MPPQueryContext;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
 import org.apache.iotdb.db.queryengine.plan.execution.config.IConfigTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.executor.IConfigTaskExecutor;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.view.AlterLogicalViewStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.view.AlterLogicalViewStatement;
 
 import com.google.common.util.concurrent.ListenableFuture;
 

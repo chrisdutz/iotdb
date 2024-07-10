@@ -40,8 +40,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.DEVICE_ALIGNMENT_INCONSISTENT_ERROR_MSG;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.IntoComponent.DUPLICATE_TARGET_PATH_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.DEVICE_ALIGNMENT_INCONSISTENT_ERROR_MSG;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.IntoComponent.DUPLICATE_TARGET_PATH_ERROR_MSG;
 
 public class DeviceViewIntoPathDescriptor {
 

@@ -178,7 +178,7 @@ import org.apache.iotdb.confignode.rpc.thrift.TUnsetSchemaTemplateReq;
 import org.apache.iotdb.confignode.rpc.thrift.TUnsubscribeReq;
 import org.apache.iotdb.confignode.service.ConfigNode;
 import org.apache.iotdb.consensus.exception.ConsensusException;
-import org.apache.iotdb.db.queryengine.plan.statement.AuthorType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.AuthorType;
 import org.apache.iotdb.rpc.RpcUtils;
 import org.apache.iotdb.rpc.TSStatusCode;
 

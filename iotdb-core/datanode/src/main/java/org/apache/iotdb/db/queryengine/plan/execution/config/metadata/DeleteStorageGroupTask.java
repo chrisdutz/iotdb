@@ -22,7 +22,7 @@ package org.apache.iotdb.db.queryengine.plan.execution.config.metadata;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
 import org.apache.iotdb.db.queryengine.plan.execution.config.IConfigTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.executor.IConfigTaskExecutor;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.DeleteDatabaseStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.DeleteDatabaseStatement;
 
 import com.google.common.util.concurrent.ListenableFuture;
 

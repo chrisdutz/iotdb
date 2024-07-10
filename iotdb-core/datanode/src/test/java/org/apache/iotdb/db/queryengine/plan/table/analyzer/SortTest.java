@@ -55,9 +55,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.apache.iotdb.db.queryengine.plan.statement.component.Ordering.ASC;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.Ordering.DESC;
 import static org.apache.iotdb.db.queryengine.plan.table.analyzer.AnalyzerTest.analyzeSQL;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering.ASC;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering.DESC;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

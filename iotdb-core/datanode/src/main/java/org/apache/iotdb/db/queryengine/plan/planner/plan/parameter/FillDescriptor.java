@@ -19,8 +19,8 @@
 
 package org.apache.iotdb.db.queryengine.plan.planner.plan.parameter;
 
-import org.apache.iotdb.db.queryengine.plan.statement.component.FillPolicy;
-import org.apache.iotdb.db.queryengine.plan.statement.literal.Literal;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.FillPolicy;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.literal.Literal;
 
 import org.apache.tsfile.utils.ReadWriteIOUtils;
 import org.apache.tsfile.utils.TimeDuration;

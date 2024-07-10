@@ -22,7 +22,7 @@ package org.apache.iotdb.db.queryengine.plan.execution.config.metadata.template;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
 import org.apache.iotdb.db.queryengine.plan.execution.config.IConfigTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.executor.IConfigTaskExecutor;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.AlterSchemaTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.AlterSchemaTemplateStatement;
 
 import com.google.common.util.concurrent.ListenableFuture;
 

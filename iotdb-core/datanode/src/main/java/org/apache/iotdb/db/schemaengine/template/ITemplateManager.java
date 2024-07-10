@@ -23,7 +23,7 @@ import org.apache.iotdb.common.rpc.thrift.TSStatus;
 import org.apache.iotdb.commons.exception.IoTDBException;
 import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.commons.path.PathPatternTree;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.CreateSchemaTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.CreateSchemaTemplateStatement;
 
 import org.apache.tsfile.utils.Pair;
 

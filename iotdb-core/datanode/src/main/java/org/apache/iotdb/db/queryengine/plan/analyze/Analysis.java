@@ -49,13 +49,13 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.GroupByParame
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.GroupByTimeParameter;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.IntoPathDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.OrderByParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.ExplainAnalyzeStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.ShowQueriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.ExplainAnalyzeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.ShowQueriesStatement;
 import org.apache.iotdb.db.schemaengine.template.Template;
 
 import org.apache.tsfile.enums.TSDataType;

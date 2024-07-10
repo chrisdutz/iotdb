@@ -22,7 +22,7 @@ package org.apache.iotdb.db.queryengine.plan.execution.config.sys.quota;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
 import org.apache.iotdb.db.queryengine.plan.execution.config.IConfigTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.executor.IConfigTaskExecutor;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.quota.SetSpaceQuotaStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.quota.SetSpaceQuotaStatement;
 
 import com.google.common.util.concurrent.ListenableFuture;
 

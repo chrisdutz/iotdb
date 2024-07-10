@@ -46,8 +46,8 @@ import org.apache.iotdb.db.protocol.client.ConfigNodeClient;
 import org.apache.iotdb.db.protocol.client.ConfigNodeClientManager;
 import org.apache.iotdb.db.protocol.client.ConfigNodeInfo;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
-import org.apache.iotdb.db.queryengine.plan.statement.AuthorType;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.AuthorStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.AuthorType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.AuthorStatement;
 import org.apache.iotdb.rpc.RpcUtils;
 import org.apache.iotdb.rpc.TSStatusCode;
 

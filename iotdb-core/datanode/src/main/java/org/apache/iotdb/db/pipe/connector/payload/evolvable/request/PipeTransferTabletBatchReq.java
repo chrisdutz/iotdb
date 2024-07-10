@@ -24,11 +24,11 @@ import org.apache.iotdb.commons.pipe.connector.payload.thrift.request.PipeReques
 import org.apache.iotdb.commons.utils.TestOnly;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.PlanFragment;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertNode;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertBaseStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertMultiTabletsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertTabletStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertBaseStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertMultiTabletsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertTabletStatement;
 import org.apache.iotdb.service.rpc.thrift.TPipeTransferReq;
 
 import org.apache.tsfile.utils.Pair;

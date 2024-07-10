@@ -35,7 +35,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.LogicalPlanVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationStep;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.StatementGenerator;
 
 import org.apache.tsfile.enums.TSDataType;

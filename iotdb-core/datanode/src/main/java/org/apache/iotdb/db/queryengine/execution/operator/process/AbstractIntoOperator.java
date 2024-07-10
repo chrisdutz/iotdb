@@ -28,8 +28,8 @@ import org.apache.iotdb.db.protocol.client.DataNodeInternalClient;
 import org.apache.iotdb.db.queryengine.execution.operator.Operator;
 import org.apache.iotdb.db.queryengine.execution.operator.OperatorContext;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.InputLocation;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertMultiTabletsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertTabletStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertMultiTabletsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertTabletStatement;
 import org.apache.iotdb.rpc.TSStatusCode;
 
 import com.google.common.util.concurrent.Futures;

@@ -46,8 +46,6 @@ import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigExecution;
 import org.apache.iotdb.db.queryengine.plan.execution.config.TableConfigTaskVisitor;
 import org.apache.iotdb.db.queryengine.plan.execution.config.TreeConfigTaskVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.TreeModelPlanner;
-import org.apache.iotdb.db.queryengine.plan.statement.IConfigStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
 import org.apache.iotdb.db.queryengine.plan.table.metadata.Metadata;
 import org.apache.iotdb.db.queryengine.plan.table.planner.TableModelPlanner;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.CreateDB;
@@ -63,6 +61,8 @@ import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowRegions;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.ShowTables;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Use;
 import org.apache.iotdb.db.queryengine.plan.table.sql.parser.SqlParser;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.IConfigStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
 import org.apache.iotdb.db.utils.SetThreadName;
 
 import org.slf4j.Logger;

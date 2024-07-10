@@ -38,9 +38,9 @@ import org.apache.iotdb.db.queryengine.execution.fragment.FragmentInstanceContex
 import org.apache.iotdb.db.queryengine.plan.analyze.cache.schema.DataNodeTTLCache;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.write.InsertRowNode;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.SetTTLStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.ShowTTLStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.UnSetTTLStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.SetTTLStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.ShowTTLStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.UnSetTTLStatement;
 import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.StatementGenerator;
 import org.apache.iotdb.db.storageengine.dataregion.compaction.execute.utils.reader.IDataBlockReader;
 import org.apache.iotdb.db.storageengine.dataregion.compaction.execute.utils.reader.SeriesDataBlockReader;

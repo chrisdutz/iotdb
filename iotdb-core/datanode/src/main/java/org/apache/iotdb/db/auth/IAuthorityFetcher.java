@@ -24,7 +24,7 @@ import org.apache.iotdb.commons.auth.AuthException;
 import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.commons.path.PathPatternTree;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.AuthorStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.AuthorStatement;
 
 import com.google.common.util.concurrent.SettableFuture;
 

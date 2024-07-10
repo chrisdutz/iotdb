@@ -54,7 +54,7 @@ import org.apache.iotdb.db.queryengine.plan.expression.visitor.cartesian.BindSch
 import org.apache.iotdb.db.queryengine.plan.expression.visitor.cartesian.ConcatDeviceAndBindSchemaForExpressionVisitor;
 import org.apache.iotdb.db.queryengine.plan.expression.visitor.cartesian.ConcatDeviceAndBindSchemaForPredicateVisitor;
 import org.apache.iotdb.db.queryengine.plan.expression.visitor.cartesian.ConcatExpressionWithSuffixPathsVisitor;
-import org.apache.iotdb.db.queryengine.plan.statement.component.ResultColumn;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.ResultColumn;
 import org.apache.iotdb.db.utils.constant.SqlConstant;
 
 import org.apache.tsfile.common.constant.TsFileConstant;

@@ -17,13 +17,13 @@
 
 package org.apache.iotdb.db.protocol.rest.v1.handler;
 
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.GetRegionIdStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.ShowStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.template.DropSchemaTemplateStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.AuthorStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.GetRegionIdStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.ShowStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.template.DropSchemaTemplateStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.AuthorStatement;
 
 public class ExecuteStatementHandler {
   private ExecuteStatementHandler() {}

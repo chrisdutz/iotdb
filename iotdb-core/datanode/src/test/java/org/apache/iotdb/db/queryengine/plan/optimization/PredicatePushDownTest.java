@@ -20,7 +20,7 @@
 package org.apache.iotdb.db.queryengine.plan.optimization;
 
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNode;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 
 import org.junit.Test;
 

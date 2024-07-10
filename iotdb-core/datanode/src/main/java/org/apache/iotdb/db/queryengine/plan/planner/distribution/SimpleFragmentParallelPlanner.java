@@ -39,10 +39,10 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.process.ExchangeNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.sink.MultiChildrenSinkNode;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.LastSeriesSourceNode;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.QueryStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.ShowTimeSeriesStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.ExplainAnalyzeStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.ShowQueriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.QueryStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.ShowTimeSeriesStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.ExplainAnalyzeStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.ShowQueriesStatement;
 
 import org.apache.tsfile.read.common.Path;
 import org.apache.tsfile.utils.Pair;

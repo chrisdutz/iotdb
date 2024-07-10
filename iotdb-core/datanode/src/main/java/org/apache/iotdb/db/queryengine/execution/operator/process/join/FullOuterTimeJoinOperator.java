@@ -26,7 +26,7 @@ import org.apache.iotdb.db.queryengine.execution.operator.OperatorContext;
 import org.apache.iotdb.db.queryengine.execution.operator.process.AbstractConsumeAllOperator;
 import org.apache.iotdb.db.queryengine.execution.operator.process.join.merge.ColumnMerger;
 import org.apache.iotdb.db.queryengine.execution.operator.process.join.merge.TimeComparator;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
 import org.apache.iotdb.db.utils.datastructure.TimeSelector;
 
 import com.google.common.util.concurrent.ListenableFuture;

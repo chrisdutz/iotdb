@@ -20,16 +20,16 @@
 package org.apache.iotdb.db.storageengine.rescon.quotas;
 
 import org.apache.iotdb.commons.exception.RpcThrottlingException;
-import org.apache.iotdb.db.queryengine.plan.statement.Statement;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementType;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertMultiTabletsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsOfOneDeviceStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertRowsStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.InsertTabletStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.crud.LoadTsFileStatement;
-import org.apache.iotdb.db.queryengine.plan.statement.pipe.PipeEnrichedStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.Statement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertMultiTabletsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsOfOneDeviceStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertRowsStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.InsertTabletStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.crud.LoadTsFileStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.pipe.PipeEnrichedStatement;
 import org.apache.iotdb.db.utils.TypeInferenceUtils;
 
 import org.apache.tsfile.enums.TSDataType;

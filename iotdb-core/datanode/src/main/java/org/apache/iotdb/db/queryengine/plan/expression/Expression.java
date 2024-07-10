@@ -51,7 +51,7 @@ import org.apache.iotdb.db.queryengine.plan.expression.unary.NegationExpression;
 import org.apache.iotdb.db.queryengine.plan.expression.unary.RegularExpression;
 import org.apache.iotdb.db.queryengine.plan.expression.visitor.ExpressionVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.InputLocation;
-import org.apache.iotdb.db.queryengine.plan.statement.StatementNode;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.StatementNode;
 import org.apache.iotdb.db.queryengine.transformation.dag.memory.LayerMemoryAssigner;
 import org.apache.iotdb.db.queryengine.transformation.dag.udf.UDTFExecutor;
 

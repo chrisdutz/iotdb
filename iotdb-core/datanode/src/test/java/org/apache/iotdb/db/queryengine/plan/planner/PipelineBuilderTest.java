@@ -59,9 +59,9 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.source.SeriesScanN
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationDescriptor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.AggregationStep;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.parameter.OrderByParameter;
-import org.apache.iotdb.db.queryengine.plan.statement.component.OrderByKey;
-import org.apache.iotdb.db.queryengine.plan.statement.component.Ordering;
-import org.apache.iotdb.db.queryengine.plan.statement.component.SortItem;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.OrderByKey;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.Ordering;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.SortItem;
 import org.apache.iotdb.db.storageengine.dataregion.DataRegion;
 
 import org.apache.tsfile.enums.TSDataType;
@@ -76,7 +76,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import static org.apache.iotdb.db.queryengine.execution.fragment.FragmentInstanceContext.createFragmentInstanceContext;
-import static org.apache.iotdb.db.queryengine.plan.statement.component.OrderByKey.DEVICE;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.ast.component.OrderByKey.DEVICE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

@@ -28,7 +28,7 @@ import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeId;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanNodeType;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.PlanVisitor;
 import org.apache.iotdb.db.queryengine.plan.planner.plan.node.WritePlanNode;
-import org.apache.iotdb.db.queryengine.plan.statement.metadata.AlterTimeSeriesStatement.AlterType;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.metadata.AlterTimeSeriesStatement.AlterType;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.tsfile.exception.NotImplementedException;

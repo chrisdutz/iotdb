@@ -24,7 +24,7 @@ import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.db.queryengine.plan.execution.config.ConfigTaskResult;
 import org.apache.iotdb.db.queryengine.plan.execution.config.IConfigTask;
 import org.apache.iotdb.db.queryengine.plan.execution.config.executor.IConfigTaskExecutor;
-import org.apache.iotdb.db.queryengine.plan.statement.sys.FlushStatement;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.ast.sys.FlushStatement;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
