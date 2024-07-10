@@ -19,7 +19,7 @@
 
 package org.apache.iotdb.cli.utils;
 
-import org.apache.iotdb.db.qp.sql.SqlLexer;
+import org.apache.iotdb.db.grammar.tree.sql.SqlLexer;
 
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReader.Option;

@@ -19,14 +19,14 @@
 
 package org.apache.iotdb.db.queryengine.plan.table.sql.parser;
 
+import org.apache.iotdb.db.grammar.table.sql.TableSqlBaseListener;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlLexer;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlParser;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.DataType;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Expression;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Node;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.NodeLocation;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Statement;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlBaseListener;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
 
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BaseErrorListener;

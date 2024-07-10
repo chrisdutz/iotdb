@@ -29,7 +29,7 @@ import org.apache.tsfile.enums.TSDataType;
 
 import java.util.Map;
 
-import static org.apache.iotdb.db.queryengine.plan.parser.ASTVisitor.checkFunctionExpressionInputSize;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.parser.ASTVisitor.checkFunctionExpressionInputSize;
 
 /**
  * This interface defines the methods that FunctionExpression may use if it is a FunctionExpression

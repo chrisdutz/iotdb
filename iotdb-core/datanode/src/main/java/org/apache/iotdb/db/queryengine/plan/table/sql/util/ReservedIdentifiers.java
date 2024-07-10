@@ -27,7 +27,7 @@ import java.time.ZoneId;
 import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static org.apache.iotdb.db.relational.grammar.sql.TableSqlKeywords.sqlKeywords;
+import static org.apache.iotdb.db.grammar.table.sql.TableSqlKeywords.sqlKeywords;
 
 public final class ReservedIdentifiers {
   private static final SqlParser PARSER = new SqlParser();

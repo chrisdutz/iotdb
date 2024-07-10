@@ -25,6 +25,9 @@ import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory;
 import org.apache.iotdb.commons.utils.CommonDateTimeUtils;
 import org.apache.iotdb.db.exception.sql.SemanticException;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlBaseVisitor;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlLexer;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlParser;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.AddColumn;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.AliasedRelation;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.AllColumns;
@@ -131,9 +134,6 @@ import org.apache.iotdb.db.queryengine.plan.table.sql.ast.Values;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.WhenClause;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.With;
 import org.apache.iotdb.db.queryengine.plan.table.sql.ast.WithQuery;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlBaseVisitor;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
 import org.apache.iotdb.db.utils.DateTimeUtils;
 
 import com.google.common.collect.ImmutableList;
@@ -161,10 +161,10 @@ import static org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory
 import static org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory.ID;
 import static org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory.MEASUREMENT;
 import static org.apache.iotdb.commons.schema.table.column.TsTableColumnCategory.TIME;
-import static org.apache.iotdb.db.queryengine.plan.parser.ASTVisitor.parseDateTimeFormat;
 import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Type.CUBE;
 import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Type.EXPLICIT;
 import static org.apache.iotdb.db.queryengine.plan.table.sql.ast.GroupingSets.Type.ROLLUP;
+import static org.apache.iotdb.db.queryengine.plan.tree.sql.parser.ASTVisitor.parseDateTimeFormat;
 
 public class AstBuilder extends TableSqlBaseVisitor<Node> {
 

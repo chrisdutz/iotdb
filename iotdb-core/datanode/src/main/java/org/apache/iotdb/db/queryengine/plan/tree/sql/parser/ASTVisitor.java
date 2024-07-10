@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.parser;
+package org.apache.iotdb.db.queryengine.plan.tree.sql.parser;
 
 import org.apache.iotdb.common.rpc.thrift.TConsensusGroupType;
 import org.apache.iotdb.common.rpc.thrift.TTimedQuota;
@@ -35,22 +35,22 @@ import org.apache.iotdb.commons.utils.PathUtils;
 import org.apache.iotdb.db.conf.IoTDBConfig;
 import org.apache.iotdb.db.conf.IoTDBDescriptor;
 import org.apache.iotdb.db.exception.sql.SemanticException;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ConnectorAttributeClauseContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ConstantContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.CountDatabasesContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.CountDevicesContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.CountNodesContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.CountTimeseriesContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.CreateFunctionContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.DropFunctionContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ExpressionContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ExtractorAttributeClauseContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.GroupByAttributeClauseContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.IdentifierContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ProcessorAttributeClauseContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser.ShowFunctionsContext;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParserBaseVisitor;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ConnectorAttributeClauseContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ConstantContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.CountDatabasesContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.CountDevicesContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.CountNodesContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.CountTimeseriesContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.CreateFunctionContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.DropFunctionContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ExpressionContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ExtractorAttributeClauseContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.GroupByAttributeClauseContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.IdentifierContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ProcessorAttributeClauseContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser.ShowFunctionsContext;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParserBaseVisitor;
 import org.apache.iotdb.db.queryengine.common.header.ColumnHeaderConstant;
 import org.apache.iotdb.db.queryengine.execution.operator.window.WindowType;
 import org.apache.iotdb.db.queryengine.plan.analyze.ExpressionAnalyzer;

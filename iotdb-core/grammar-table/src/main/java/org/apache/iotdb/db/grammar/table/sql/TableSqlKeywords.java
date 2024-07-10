@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.relational.grammar.sql;
+package org.apache.iotdb.db.grammar.table.sql;
 
 import com.google.common.collect.ImmutableSet;
 import org.antlr.v4.runtime.Vocabulary;

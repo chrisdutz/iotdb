@@ -48,7 +48,7 @@
                         <configuration>
                             <listener>false</listener>
                             <visitor>true</visitor>
-                            <libDirectory>src/main/antlr4/org/apache/iotdb/db/qp/sql</libDirectory>
+                            <libDirectory>src/main/antlr4/org/apache/iotdb/db/grammar/tree/sql</libDirectory>
                         </configuration>
                     </execution>
                 </executions>

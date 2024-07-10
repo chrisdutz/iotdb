@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.iotdb.db.queryengine.plan.parser;
+package org.apache.iotdb.db.queryengine.plan.tree.sql.parser;
 
 import org.apache.iotdb.common.rpc.thrift.TAggregationType;
 import org.apache.iotdb.commons.exception.IllegalPathException;
@@ -25,8 +25,8 @@ import org.apache.iotdb.commons.exception.MetadataException;
 import org.apache.iotdb.commons.path.PartialPath;
 import org.apache.iotdb.commons.service.metric.PerformanceOverviewMetrics;
 import org.apache.iotdb.db.exception.query.QueryProcessException;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser;
-import org.apache.iotdb.db.qp.sql.SqlLexer;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser;
+import org.apache.iotdb.db.grammar.tree.sql.SqlLexer;
 import org.apache.iotdb.db.queryengine.plan.analyze.cache.schema.DataNodeDevicePathCache;
 import org.apache.iotdb.db.queryengine.plan.expression.binary.GreaterEqualExpression;
 import org.apache.iotdb.db.queryengine.plan.expression.binary.LessThanExpression;
@@ -819,8 +819,8 @@ public class StatementGenerator {
 
         CommonTokenStream tokens2 = new CommonTokenStream(lexer2);
 
-        org.apache.iotdb.db.qp.sql.IoTDBSqlParser parser2 =
-            new org.apache.iotdb.db.qp.sql.IoTDBSqlParser(tokens2);
+        org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser parser2 =
+            new org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser(tokens2);
         parser2.getInterpreter().setPredictionMode(PredictionMode.LL);
         parser2.removeErrorListeners();
         parser2.addErrorListener(SqlParseError.INSTANCE);

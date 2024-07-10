@@ -19,8 +19,8 @@
 
 package org.apache.iotdb.db.queryengine.plan.table.sql.parser;
 
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlLexer;
-import org.apache.iotdb.db.relational.grammar.sql.TableSqlParser;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlLexer;
+import org.apache.iotdb.db.grammar.table.sql.TableSqlParser;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;

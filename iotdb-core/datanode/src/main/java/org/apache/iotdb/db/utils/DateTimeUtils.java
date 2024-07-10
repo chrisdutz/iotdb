@@ -20,11 +20,11 @@ package org.apache.iotdb.db.utils;
 
 import org.apache.iotdb.commons.conf.CommonDescriptor;
 import org.apache.iotdb.commons.utils.TestOnly;
+import org.apache.iotdb.db.grammar.tree.sql.IoTDBSqlParser;
+import org.apache.iotdb.db.grammar.tree.sql.SqlLexer;
 import org.apache.iotdb.db.protocol.session.SessionManager;
-import org.apache.iotdb.db.qp.sql.IoTDBSqlParser;
-import org.apache.iotdb.db.qp.sql.SqlLexer;
-import org.apache.iotdb.db.queryengine.plan.parser.ASTVisitor;
-import org.apache.iotdb.db.queryengine.plan.parser.SqlParseError;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.ASTVisitor;
+import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.SqlParseError;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;

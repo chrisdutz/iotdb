@@ -19,6 +19,8 @@
 
 package org.apache.iotdb.db.queryengine.plan.parser;
 
+import org.apache.iotdb.db.queryengine.plan.tree.sql.parser.ASTVisitor;
+
 import org.junit.After;
 import org.junit.Before;
 

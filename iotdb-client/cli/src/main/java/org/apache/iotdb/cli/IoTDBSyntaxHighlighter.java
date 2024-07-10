@@ -20,7 +20,7 @@
 package org.apache.iotdb.cli;
 
 import org.apache.iotdb.cli.utils.JlineUtils;
-import org.apache.iotdb.db.qp.sql.SqlLexer;
+import org.apache.iotdb.db.grammar.tree.sql.SqlLexer;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
